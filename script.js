@@ -70,7 +70,7 @@ setInterval(function info(){
       var h = jsonReturn.queue[7];
       $("#s_8").text(h.song);
 
-      
+
       $("#s_9").text(s_name);
       $("#s_10").text(s_name);
       $("#s_11").text(s_name);
@@ -91,6 +91,44 @@ setInterval(function info(){
     }
   });  
 },intervaltime);
+
+setInterval(function pb(){
+  $.ajax({
+    method: "GET",
+    url: "http://178.128.222.109:5000/API/bot/get/player/",
+    dataType: "json",
+    cache: false,
+    success: function(jsonReturn){
+      //fetch progress
+      var s_duration = jsonReturn.now_playing.duration;
+      var s_progress = jsonReturn.now_playing.progress;
+      var progresspc = ((s_progress/s_duration) * 100);
+      progress();
+     
+
+    },
+    error: function error(){
+      console.log(error);
+    }
+  });  
+},10000);
+
+
+function progress(){
+  var elem = document.getElementById("npprogress"); 
+    var width = 1;
+    var id = setInterval(frame, 1000);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        } else {
+          width = width + progresspc
+            width++; 
+            elem.style.width = width + '%'; 
+        }
+    }
+}
+
 
 
 
