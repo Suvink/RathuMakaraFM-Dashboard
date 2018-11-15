@@ -28,32 +28,37 @@ setInterval(function(){
       var reqq = "Requested By: " + s_requester;
       $("#npreq").text(reqq);
 
-      var a = jsonReturn.queue[0];
-      var b = a.song;
-      console.log(a);
-      console.log(b);
       //Fetch Queue
       $("#q_np").text(s_name); //nowplaying
-      $("#s_1").text(b);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
-      $("#q_np").text(s_name);
+
+      var a = jsonReturn.queue[0];
+      $("#s_1").text(a.song);
+
+      var b = jsonReturn.queue[1];
+      $("#s_2").text(b.song);
+
+      var c = jsonReturn.queue[2];
+      $("#s_3").text(c.song);
+
+      var d = jsonReturn.queue[3];
+      $("#s_4").text(c.song);
+
+      $("#s_5").text(s_name);
+      $("#s_6").text(s_name);
+      $("#s_7").text(s_name);
+      $("#s_8").text(s_name);
+      $("#s_9").text(s_name);
+      $("#s_10").text(s_name);
+      $("#s_11").text(s_name);
+      $("#s_12").text(s_name);
+      $("#s_13").text(s_name);
+      $("#s_14").text(s_name);
+      $("#s_15").text(s_name);
+      $("#s_16").text(s_name);
+      $("#s_17").text(s_name);
+      $("#s_18").text(s_name);
+      $("#s_19").text(s_name);
+      $("#s_20").text(s_name);
       $("#q_np").text(s_name);
 
       
