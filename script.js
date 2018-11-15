@@ -23,7 +23,8 @@ function onSuccess(jsonReturn){
   console.log(s_requester);
   $("#npName").text(s_name);
   $("#npthumb").attr("src",s_thumb);
-  $("#npreq").text("Requested By: "+ s_requester);
+  var reqq = "Requested By: " + s_requester;
+  $("#npreq").text(reqq);
 }
 
 function onError(){
