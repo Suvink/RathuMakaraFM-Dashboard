@@ -27,7 +27,14 @@ setInterval(function(){
       $("#npthumb").attr("src",s_thumb);
       var reqq = "Requested By: " + s_requester;
       $("#npreq").text(reqq);
-      //sd
+
+      //Fetch Queue
+      $("s_1").text(s_name);
+
+
+
+
+
     },
     error: function error(){
       console.log(error);
