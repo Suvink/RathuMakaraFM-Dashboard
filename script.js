@@ -16,6 +16,7 @@ Add to queue button = btn-addtoqueue
 var ispaused;
 var songName;
 var intervaltime = 500;
+var progresspc
 
 //Refresh data => Ajax async
 setInterval(function info(){
@@ -104,7 +105,7 @@ setInterval(function pb(){
       //fetch progress
       var s_duration = jsonReturn.now_playing.duration;
       var s_progress = jsonReturn.now_playing.progress;
-      var progresspc = ((s_progress/s_duration) * 100);
+      progresspc = ((s_progress/s_duration) * 100);
       progress();
      
 
