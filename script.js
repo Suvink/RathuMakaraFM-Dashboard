@@ -2,7 +2,7 @@
 //Global Variables
 var ispaused;
 var songName;
-var intervaltime = 500;
+var intervaltime = 5000;
 
 //Refresh data => Ajax async
 /*
@@ -42,7 +42,6 @@ setInterval(function(){
 
       var d = jsonReturn.queue[3];
       $("#s_4").text(d.song);
-      console.log(d.song);
 
       $("#s_5").text(s_name);
       $("#s_6").text(s_name);
