@@ -1,11 +1,14 @@
 //POST ID list
 /*
 clear queue = #clearq
+play/pause button = btn-pause
+skip button = btn-skip
+volume high button = btn-volume-high
+volume low button = btn-volume-low
+Autoplay switch = btn-autoplay
+custom volume text area = setvol
+Add to queue button = btn-addtoqueue
 */
-
-
-
-
 
 
 
@@ -22,11 +25,11 @@ setInterval(function info(){
     dataType: "json",
     cache: false,
     success: function(jsonReturn){
+      //fetchdata
       var s_name = jsonReturn.now_playing.song;
       var s_thumb = jsonReturn.now_playing.thumbnail;
       var s_requester = jsonReturn.now_playing.requester;
-      console.log(s_name,s_thumb);
-      console.log(s_requester);
+      //pushdata
       $("#npName").text(s_name);
       $("#npthumb").attr("src",s_thumb);
       var reqq = "Requested By: " + s_requester;
@@ -73,18 +76,14 @@ setInterval(function info(){
       $("#s_20").text(s_name);
       $("#q_np").text(s_name);
 
-      
-
-
-
-
-
     },
     error: function error(){
       console.log(error);
     }
   });  
 },intervaltime);
+
+
 
 function showDiv(videoinfo){
     keyWordsearch();
