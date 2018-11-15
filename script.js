@@ -35,7 +35,7 @@ setInterval(function(){
       //fetch progress
       var s_duration = jsonReturn.now_playing.duration;
       var s_progress = jsonReturn.now_playing.progress;
-      var progresspc = ((s_duration/s_progress) * 100);
+      var progresspc = ((s_progress/s_duration) * 100);
       console.log(progresspc);
       $("#npprogress").attr("aria-valuenow",progresspc);
 
