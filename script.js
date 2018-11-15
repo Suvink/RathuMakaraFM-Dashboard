@@ -21,7 +21,7 @@ function onSuccess(jsonReturn){
   var s_requester = jsonReturn.now_playing.requester;
   console.log(s_name,s_thumb,s_requester);
   $("#npName").text(s_name);
-  $("#npthumb").attr("src",s-thumb);
+  $("#npthumb").attr("src",s_thumb);
   $("#npreq").text(s_requester);
 }
 
