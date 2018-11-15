@@ -58,10 +58,19 @@ setInterval(function info(){
       var d = jsonReturn.queue[3];
       $("#s_4").text(d.song);
 
-      $("#s_5").text(s_name);
-      $("#s_6").text(s_name);
-      $("#s_7").text(s_name);
-      $("#s_8").text(s_name);
+      var e = jsonReturn.queue[4];
+      $("#s_5").text(e.song);
+
+      var f = jsonReturn.queue[5];
+      $("#s_6").text(f.song);
+
+      var g = jsonReturn.queue[6];
+      $("#s_7").text(g.song);
+
+      var h = jsonReturn.queue[7];
+      $("#s_8").text(h.song);
+
+      
       $("#s_9").text(s_name);
       $("#s_10").text(s_name);
       $("#s_11").text(s_name);
