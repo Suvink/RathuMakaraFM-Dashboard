@@ -1,4 +1,8 @@
 //Main function
+//Global Variables
+var ispaused;
+var songName;
+
 //Refresh data => Ajax async
 
 $(document).ready(function(){
@@ -111,7 +115,7 @@ function playnow(){
   
 
   //Youtube Data API v3
-var songName;
+
   function keyWordsearch(){
     gapi.client.setApiKey('AIzaSyBpkvDP5X_E0D3Jdzq-14SVugYzdaF82AQ');
     gapi.client.load('youtube', 'v3', function() {
