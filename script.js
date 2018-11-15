@@ -29,7 +29,9 @@ setInterval(function(){
       $("#npreq").text(reqq);
 
       var a = jsonReturn.queue[1];
+      var b = a.song;
       console.log(a);
+      console.log(b);
       //Fetch Queue
       $("#q_np").text(s_name); //nowplaying
       $("#q_np").text(s_name);
