@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/css/mdb.min.css" rel="stylesheet">
+        <!-- Custom Styling  -->
+        <link href="style.css" rel="stylesheet">
+        <!--meta tags-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+
+        <title>RathumakaraFM</title>
+    </head>
+
+    <body>
+
+        <section id="navbar">
+            <!--Navbbar-->
+            <nav class="navbar navbar-dark elegant-color-dark justify-content-between">
+                    <a class="navbar-brand" href="#">
+                        <img src="img/bg.png" height="35" alt="mdb logo">
+                    </a>
+                    
+                    <form class="form-inline my-1">
+                    <span class="navbar-text white-text text-right" style="font-style: italic">Welcome Dumbledore#6249</span>
+                    <button class="btn btn-success btn-sm my-0" type="submit"><i class="fa fa-user mr-2"></i>Logout</button>
+                    </form>
+                </nav>
+            <!--/.Navbar-->
+        </section>
+
+
+        <section id="controls">
+            <div class="text-center">
+                <img class="text-right" src="img/thumb.jpg" class="rounded mx-auto d-block" alt="Video Thumbnail" height="180px">
+            </div>
+
+            <div class="text-center">
+                <h2 class="text-white" id="npName">ගිනියම් රෑ with Ranuka D <span><h6 id="npreq">Requested by Dumbledore</h6></span></h2>
+            </div>
+        
+            <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+
+            <div class="container text-center" id="buttons">
+                <button type="submit" id="btn-pause" class="btn btn-success btn-sm" onclick="pause();">Pause</button>
+                <button type="submit" id="btn-skip" class="btn btn-danger btn-sm" onclick="skipnow();">Skip</button>
+                <button type="submit" id="btn-volume_high" class="btn btn-default btn-sm" onclick="volume_high();">High Vol</button>
+                <button type="submit" id="btn-volume-low" class="btn btn-primary btn-sm" onclick="volume_low();">Low Vol</button>
+                <button type="submit" id="btn-autoplay" class="btn btn-indigo btn-sm" onclick="autoplay();">Autoplay ON</button>
+
+                <div class="container text-center" >
+                    <form>
+                        <input class="form-control form-control-sm" id="setvol" type="number" max="100" min="0" placeholder="Volume">
+                        <button type="button" class="btn btn-info btn-sm" onclick="custom_vol();"><i class="fa fa-check mr-1"></i></button>
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <section id="queue">
+            <div class="text-center" id="queuetitle">
+                <h1>Song Queue</h1>
+            </div>
+
+
+            <div class="container" id="queuelist">
+                <div class="row">
+                    <div class="col-sm-8">
+                            <ul class="list-group" id="queuecontent">
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      Cras justo odio
+                                      <span class="badge badge-danger badge-pill">Now playing</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">dkgmrdgm</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">vgs gdrgv g</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac fajcsjf njdsfns fndsjfn fnsejfn fnsjefn fnsjkenvcilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">Dapibus ac facilisis in</li>
+                                    
+                            </ul>
+                    </div>
+
+                    <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addsong"  style="display:inline-block">Add a song</button><br>
+                            <button type="button" class="btn btn-danger btn-lg" style="display:inline-block">Clear Queue</button>
+                            
+                    </div>
+
+                </div>       
+            </div>
+
+        </section>
+
+
+    <section class="container">
+    <!-- Add a song popup-->
+        <div class="modal fade" id="addsong" tabindex="-1" role="dialog" aria-labelledby="Add a song to Queue" aria-hidden="true">
+
+            <!-- Change class .modal-sm to change the size of the modal -->
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">Add a song to queue</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <input class="form-control form-control-sm" type="text" id="songname"  placeholder="Type a song name or a link">
+                            <button type="button" class="btn btn-info btn-sm" onclick="showDiv();"><i class="fa fa-search mr-1"></i></button>
+                        </form>
+                        
+
+                        <div class="card" id="videoinfo" style="display:none">
+                                <!-- Youtube Thumbnail -->
+                                <img class="card-img-top" id ="ytThumb" src="img/thumb.jpg" alt="Song Thumbnail">
+                            
+                                <!-- Card content -->
+                                <div class="card-body">
+                            
+                                <!-- Song title -->
+                                <h4 class="card-title" id="ytName"><a>POP/STARS - Opening Ceremony Presented by Mastercard | Finals | 2018 World Championship</a></h4>
+                                <!-- Description -->
+                                <p class="card-text" id = "ytDes">The Opening Ceremony performance of K/DA - POP/STARS at the 2018 League of Legends World Championship in Incheon, South Korea, presented by Mastercard.</p>
+                                <!-- Button -->
+                                <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#notifymodal" data-dismiss="modal" onclick="addtoqueue();">Add to Queue</a>
+                            
+                                </div>
+                        </div>
+                    </div>
+
+        
+                </div>
+            </div>
+        </div>
+        <!-- Central Modal Small -->
+    </section>
+
+
+    <!--Notification Alert-->
+    <section class="container">
+        <!-- Modal-->
+        <div class="modal fade" id="notifymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-success modal-top-right" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h6 class="modal-title">Success!</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body text-center">
+                        <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                <p>The song wass successfully added to the queue!</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/js/mdb.min.js"></script>
+        <!-- Javascript File -->
+        <script type="text/javascript" src="script.js"></script>
+        <!-- Youtube Data API -->
+        <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
+
+    </body>
+</html>

@@ -1,0 +1,40 @@
+body{
+    background-image: url("img/bg.jpg");
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.progress{
+    width:60%;
+}
+#setvol{
+    color: #000000;
+    width:10%; 
+    display:inline-block;
+}
+#queuetitle{
+    color:white
+}
+#queuecontent{
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+.np{
+    font-style: italic;
+    color:red;
+
+}
+#queue{
+    margin-block-start: 10px
+}
+#controls{
+    margin-block-start: 30px
+}
+.progress{
+    margin-left: 20%;
+    margin-right: 20%
+}
+
+.btn{
+    cursor: pointer
+}
