@@ -29,7 +29,7 @@ setInterval(function(){
       $("#npreq").text(reqq);
 
       //Fetch Queue
-      $("#s_1").text(s_name);
+      $("#q_np").text(s_name);
 
 
 
