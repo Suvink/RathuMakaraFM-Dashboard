@@ -1,0 +1,78 @@
+<script>
+        var Minutes = '{{time_out}}';
+        var ticktick = false;
+        var answered = false;
+        var final_time = 0;
+        var obj, ans_obj, select_answer;
+        document.getElementById("A").disabled = true;
+        document.getElementById("B").disabled = true;
+        document.getElementById("C").disabled = true;
+        document.getElementById("D").disabled = true;
+        setInterval(function(){
+            $.ajax({
+              url: "/backend",
+              type: "get",
+              success: function(response) {
+                obj = JSON.parse(response);
+                if (ticktick){
+                    document.getElementById("Q").innerHTML = obj.Q;
+                    document.getElementById("A").innerHTML = obj.A;
+                    document.getElementById("B").innerHTML = obj.B;
+                    document.getElementById("C").innerHTML = obj.C;
+                    document.getElementById("D").innerHTML = obj.D;
+                    document.getElementById("A").disabled = false;
+                    document.getElementById("B").disabled = false;
+                    document.getElementById("C").disabled = false;
+                    document.getElementById("D").disabled = false;
+                    document.getElementById("A").className = "btn btn-primary btn-block";
+                    document.getElementById("B").className = "btn btn-primary btn-block";
+                    document.getElementById("C").className = "btn btn-primary btn-block";
+                    document.getElementById("D").className = "btn btn-primary btn-block";
+                }
+                else{
+                    $.ajax({
+                        url: "/state",
+                        type: "get",
+                        success: function(response) {
+                            ans_obj = JSON.parse(response);
+                            if(!answered && ans_obj.state_ === 'answering'){
+                                ticktick = true;
+                            }
+                            else if(ans_obj.state_ === 'show_answer'){
+                                document.getElementById("A").className = "btn btn-danger btn-block";
+                                document.getElementById("B").className = "btn btn-danger btn-block";
+                                document.getElementById("C").className = "btn btn-danger btn-block";
+                                document.getElementById("D").className = "btn btn-danger btn-block";
+                                document.getElementById(select_answer).className = "btn btn-warning btn-block";
+                                document.getElementById(ans_obj.answer_).className = "btn btn-success btn-block";
+                                answered = false;
+                                ticktick = false;
+                            }
+                        }
+                    });
+                }
+              },
+              error: function(error) {
+                console.log(error)
+              }
+            });
+        }, 500);
+    function httpGet(theUrl)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        //return xmlHttp.responseText;
+    }
+    function answer(text) {
+        ticktick = false;
+        document.getElementById("A").disabled = true;
+        document.getElementById("B").disabled = true;
+        document.getElementById("C").disabled = true;
+        document.getElementById("D").disabled = true;
+        document.getElementById(text).className = "btn btn-warning btn-block";
+        answered = true;
+        select_answer = text;
+        httpGet('/answer/?school={{ school }}&answer='+text+'&time='+final_time);
+    }
+    </script>

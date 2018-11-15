@@ -2,45 +2,38 @@
 //Global Variables
 var ispaused;
 var songName;
+var intervaltime = 500;
 
 //Refresh data => Ajax async
-
+/*
 $(document).ready(function(){
   getMakara();
 });
+*/
 
-function getMakara(){
+setInterval(function(){
   $.ajax({
     method: "GET",
     url: "http://178.128.222.109:5000/API/bot/get/player/",
     dataType: "json",
     cache: false,
-    success: onSuccess,
-    error: onError
-  }) 
-}
-
-function onSuccess(jsonReturn){
-  var s_name = jsonReturn.now_playing.song;
-  var s_thumb = jsonReturn.now_playing.thumbnail;
-  var s_requester = jsonReturn.now_playing.requester;
-  console.log(s_name,s_thumb);
-  console.log(s_requester);
-  $("#npName").text(s_name);
-  $("#npthumb").attr("src",s_thumb);
-  var reqq = "Requested By: " + s_requester;
-  $("#npreq").text(reqq);
-  //sd
-}
-
-function onError(){
-  alert("Error!");
- }
-
-
-
-
-
+    success: function(jsonReturn){
+      var s_name = jsonReturn.now_playing.song;
+      var s_thumb = jsonReturn.now_playing.thumbnail;
+      var s_requester = jsonReturn.now_playing.requester;
+      console.log(s_name,s_thumb);
+      console.log(s_requester);
+      $("#npName").text(s_name);
+      $("#npthumb").attr("src",s_thumb);
+      var reqq = "Requested By: " + s_requester;
+      $("#npreq").text(reqq);
+      //sd
+    },
+    error: function error(){
+      console.log(error);
+    }
+  });  
+},intervaltime);
 
 function showDiv(videoinfo){
     keyWordsearch();
