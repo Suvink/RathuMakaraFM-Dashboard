@@ -30,6 +30,7 @@ function onSuccess(jsonReturn){
   $("#npthumb").attr("src",s_thumb);
   var reqq = "Requested By: " + s_requester;
   $("#npreq").text(reqq);
+  //sd
 }
 
 function onError(){
