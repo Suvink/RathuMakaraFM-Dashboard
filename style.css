@@ -16,8 +16,6 @@ body{
 #queuecontent{
     max-height: 300px;
     margin-bottom: 10px;
-    overflow:scroll;
-    -webkit-overflow-scrolling: touch;
 }
 .np{
     font-style: italic;
