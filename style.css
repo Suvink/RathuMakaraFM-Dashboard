@@ -34,7 +34,9 @@ body{
     margin-left: 20%;
     margin-right: 20%
 }
-
 .btn{
     cursor: pointer
+}
+#npreq{
+    margin-top: 0;
 }
