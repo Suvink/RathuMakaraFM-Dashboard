@@ -16,7 +16,7 @@ Add to queue button = btn-addtoqueue
 var ispaused;
 var songName;
 var intervaltime = 500;
-var progresspc
+
 
 //Refresh data => Ajax async
 setInterval(function info(){
@@ -37,14 +37,14 @@ setInterval(function info(){
       $("#npreq").text(reqq);
 
       //fetch progress
-      /*
+      
       var s_duration = jsonReturn.now_playing.duration;
       var s_progress = jsonReturn.now_playing.progress;
       var progresspc = ((s_progress/s_duration) * 100);
       var post = "width:"+progresspc+"%";
       console.log(progresspc);
       $("#npprogress").attr("style",post);
-      */
+      
 
       //Fetch Queue
       $("#q_np").text(s_name); //nowplaying
@@ -95,44 +95,7 @@ setInterval(function info(){
   });  
 },intervaltime);
 
-setInterval(function pb(){
-  $.ajax({
-    method: "GET",
-    url: "http://178.128.222.109:5000/API/bot/get/player/",
-    dataType: "json",
-    cache: false,
-    success: function(jsonReturn){
-      //fetch progress
-      var s_duration = jsonReturn.now_playing.duration;
-      var s_progress = jsonReturn.now_playing.progress;
-      progresspc = ((s_progress/s_duration) * 100);
-      progress();
-     
 
-    },
-    error: function error(){
-      console.log(error);
-    }
-  });  
-},10000);
-
-
-function progress(){
-  var elem = document.getElementById("npprogress"); 
-    var width = 1;
-    var id = setInterval(frame, 1000);
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-          width = width + progresspc
-            width++; 
-            var post = "width:"+ width + "%"
-            $(elem).attr("style",post);
-            //elem.style.width = width + '%'; 
-        }
-    }
-}
 
 
 
