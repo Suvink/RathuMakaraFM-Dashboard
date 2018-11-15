@@ -127,7 +127,7 @@ function progress(){
         } else {
           width = width + progresspc
             width++; 
-            var post = width + "%"
+            var post = "width:"+ width + "%"
             $(elem).attr("style",post);
             //elem.style.width = width + '%'; 
         }
