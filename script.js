@@ -41,7 +41,7 @@ setInterval(function(){
       $("#s_3").text(c.song);
 
       var d = jsonReturn.queue[3];
-      $("#s_4").text(c.song);
+      $("#s_4").text(d.song);
 
       $("#s_5").text(s_name);
       $("#s_6").text(s_name);
