@@ -15,7 +15,7 @@ function getMakara(){
   }) 
 }
 
-function onSuccess(){
+function onSuccess(jsonReturn){
   var s_name = now_playing.song;
   var s_thumb = now_playing.thumbnail;
   var s_requester = now_playing.requester;
@@ -25,19 +25,6 @@ function onSuccess(){
 function onError(){
   alert("Error!");
  }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
