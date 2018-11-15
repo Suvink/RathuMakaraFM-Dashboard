@@ -10,6 +10,7 @@ function getMakara(){
     method: "GET",
     url: "http://178.128.222.109:5000/API/bot/get/player/",
     dataType: "json",
+    cache: false,
     success: onSuccess,
     error: onError
   }) 
