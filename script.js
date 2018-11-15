@@ -15,7 +15,7 @@ var songName;
 var intervaltime = 500;
 
 //Refresh data => Ajax async
-setInterval(function(){
+setInterval(function info(){
   $.ajax({
     method: "GET",
     url: "http://178.128.222.109:5000/API/bot/get/player/",
@@ -39,8 +39,6 @@ setInterval(function(){
       var post = "width:"+progresspc+"%";
       console.log(progresspc);
       $("#npprogress").attr("style",post);
-
-
 
       //Fetch Queue
       $("#q_np").text(s_name); //nowplaying
