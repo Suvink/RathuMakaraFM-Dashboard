@@ -1,16 +1,20 @@
-//Main function
+//POST ID list
+/*
+clear queue = #clearq
+*/
+
+
+
+
+
+
+
 //Global Variables
 var ispaused;
 var songName;
-var intervaltime = 10000;
+var intervaltime = 500;
 
 //Refresh data => Ajax async
-/*
-$(document).ready(function(){
-  getMakara();
-});
-*/
-
 setInterval(function(){
   $.ajax({
     method: "GET",
@@ -27,6 +31,15 @@ setInterval(function(){
       $("#npthumb").attr("src",s_thumb);
       var reqq = "Requested By: " + s_requester;
       $("#npreq").text(reqq);
+
+      //fetch progress
+      var s_duration = jsonReturn.now_playing.duration;
+      var s_progress = jsonReturn.now_playing.progress;
+      var progresspc = ((s_duration/s_progress) * 100);
+      console.log(progresspc);
+      $("#npprogress").attr("aria-valuenow",progresspc);
+
+
 
       //Fetch Queue
       $("#q_np").text(s_name); //nowplaying
