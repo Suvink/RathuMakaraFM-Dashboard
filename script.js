@@ -2,7 +2,7 @@
 //Global Variables
 var ispaused;
 var songName;
-var intervaltime = 5000;
+var intervaltime = 10000;
 
 //Refresh data => Ajax async
 /*
