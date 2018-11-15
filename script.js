@@ -16,7 +16,8 @@ function getMakara(){
 }
 
 function onSuccess(jsonReturn){
-  var s_name = now_playing.song;
+  var s_name = jsonReturn.song;
+  console.log(s_name);
   var s_thumb = now_playing.thumbnail;
   var s_requester = now_playing.requester;
   $("#npName").text(s_name);
