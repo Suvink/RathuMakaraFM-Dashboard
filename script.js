@@ -28,8 +28,33 @@ setInterval(function(){
       var reqq = "Requested By: " + s_requester;
       $("#npreq").text(reqq);
 
+      var a = jsonReturn.queue[1];
+      console.log(a);
       //Fetch Queue
+      $("#q_np").text(s_name); //nowplaying
       $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+      $("#q_np").text(s_name);
+
+      
 
 
 
