@@ -127,7 +127,9 @@ function progress(){
         } else {
           width = width + progresspc
             width++; 
-            elem.style.width = width + '%'; 
+            var post = width + "%"
+            $(elem).attr("style",post);
+            //elem.style.width = width + '%'; 
         }
     }
 }
