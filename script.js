@@ -83,6 +83,7 @@ setInterval(function info(){
     },
     error: function error(){
       console.log(error);
+      console.clear();
     }
   });  
 },intervaltime);
