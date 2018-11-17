@@ -8,7 +8,7 @@
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/css/mdb.min.css" rel="stylesheet">
         <!-- Custom Styling  -->
-        <link href="style.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
         <!--meta tags-->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
@@ -18,24 +18,22 @@
     <body>
 
         <section id="navbar">
-            <!--Navbbar-->
             <nav class="navbar navbar-dark elegant-color-dark justify-content-between">
-                    <a class="navbar-brand" href="#">
-                        <img src="img/bg.png" height="35" alt="mdb logo">
-                    </a>
-                    
-                    <form class="form-inline my-1">
-                    <span class="navbar-text white-text text-right" style="font-style: italic">Welcome Dumbledore#6249</span><span>&nbsp;</span>
+                <a class="navbar-brand" href="#">
+                    <img src="img/bg.png" height="35" alt="mdb logo">
+                </a>
+
+                <form class="form-inline my-1">
+                    <span class="navbar-text white-text text-right" style="font-style: italic">Welcome Dumbledore#6249</span>
                     <button class="btn btn-success btn-sm my-0" type="submit"><i class="fa fa-user mr-2"></i>Logout</button>
-                    </form>
-                </nav>
-            <!--/.Navbar-->
+                </form>
+            </nav>
         </section>
 
 
         <section id="controls">
             <div class="text-center">
-                <img class="text-right" id = "npthumb" src="img/thumb.jpg" class="rounded mx-auto d-block" alt="Video Thumbnail" height="180px">
+                <img id="npthumb" src="img/thumb.jpg" class="text-right rounded mx-auto d-block" alt="Video Thumbnail" height="180px">
             </div>
 
             <div class="text-center">
@@ -142,7 +140,7 @@
                                 <!-- Description -->
                                 <p class="card-text" id = "ytDes">Video Description loading....</p>
                                 <!-- Button -->
-                                <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" id = "btn-addtoqueue"data-target="#notifymodal" data-dismiss="modal" onclick="addtoqueue();">Add to Queue</a>
+                                <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" id = "btn-addtoqueue" data-target="#notifymodal" data-dismiss="modal" onclick="addtoqueue();">Add to Queue</a>
                             
                                 </div>
                         </div>
@@ -190,7 +188,7 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/js/mdb.min.js"></script>
         <!-- Javascript File -->
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
         <!-- Youtube Data API -->
         <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
 

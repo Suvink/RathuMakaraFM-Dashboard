@@ -2,3 +2,5 @@
 *makara.code-workspace
 *.java
 *.class
+.idea/
+__pycache__/
