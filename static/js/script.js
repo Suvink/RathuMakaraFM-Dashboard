@@ -49,8 +49,8 @@ setInterval(function info(){
 
       for (var i = 0; i < jsonReturn.queue.length; i++) {
         var li = document.createElement("li");
-        var con = jsonReturn.queue[i].song+" by "+ jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill"'+i+'</span>'
-        li.appendChild(document.createTextNode(con));
+//        li.appendChild(document.createTextNode(con));
+        li.innerHTML = jsonReturn.queue[i].song+" by "+ jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill"'+i+'</span>'
         li.setAttribute("id", "s_"+i);
         li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
         ul.appendChild(li);
