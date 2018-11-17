@@ -170,7 +170,6 @@ function playnow(){
       "cmd": "queue",
       "args": vidurl,
     });
-    console.log(vidurl);
   }
 
 
