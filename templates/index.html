@@ -20,7 +20,7 @@
         <section id="navbar">
             <nav class="navbar navbar-dark elegant-color-dark justify-content-between">
                 <a class="navbar-brand" href="#">
-                    <img src="img/bg.png" height="35" alt="mdb logo">
+                    <img src="{{ url_for('static', filename='img/bg.png') }}" height="35" alt="mdb logo">
                 </a>
 
                 <form class="form-inline my-1">
@@ -33,7 +33,7 @@
 
         <section id="controls">
             <div class="text-center">
-                <img id="npthumb" src="img/thumb.jpg" class="text-right rounded mx-auto d-block" alt="Video Thumbnail" height="180px">
+                <img id="npthumb" src="{{ url_for('static', filename='img/thumb.jpg') }}" class="text-right rounded mx-auto d-block" alt="Video Thumbnail" height="180px">
             </div>
 
             <div class="text-center">
@@ -130,7 +130,7 @@
 
                         <div class="card" id="videoinfo" style="display:none">
                                 <!-- Youtube Thumbnail -->
-                                <img class="card-img-top" id ="ytThumb" src="img/thumb.jpg" alt="Song Thumbnail">
+                                <img class="card-img-top" id ="ytThumb" src="{{ url_for('static', filename='img/thumb.jpg') }}" alt="Song Thumbnail">
                             
                                 <!-- Card content -->
                                 <div class="card-body">
