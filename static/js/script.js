@@ -41,7 +41,7 @@ setInterval(function info(){
       var s_progress = jsonReturn.now_playing.progress;
       var progresspc = ((s_progress/s_duration) * 100);
       var post = "width:"+progresspc+"%";
-      console.log(progresspc);
+//      console.log(progresspc);
       $("#npprogress").attr("style",post);
 
       var ul = document.getElementById("queuecontent");
@@ -49,7 +49,8 @@ setInterval(function info(){
 
       for (var i = 0; i < jsonReturn.queue.length; i++) {
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode(jsonReturn.queue[i].song));
+        var con = jsonReturn.queue[i].song+" by "+ jsonReturn.queue[i].uploader + '<span class="badge badge-danger badge-pill"'+i+'</span'
+        li.appendChild(document.createTextNode(con));
         li.setAttribute("id", "s_"+i);
         li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
         ul.appendChild(li);
