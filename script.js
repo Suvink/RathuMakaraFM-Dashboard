@@ -10,8 +10,6 @@ custom volume text area = setvol
 Add to queue button = btn-addtoqueue
 */
 
-
-
 //Global Variables
 var ispaused;
 var songName;
@@ -22,7 +20,7 @@ var intervaltime = 500;
 setInterval(function info(){
   $.ajax({
     method: "GET",
-    url: "http://178.128.222.109:5000/API/bot/get/player/",
+    url: "https://api.iconicto.com/rathumakara/player_status/",
     dataType: "json",
     cache: false,
     success: function(jsonReturn){
@@ -88,8 +86,6 @@ setInterval(function info(){
     }
   });  
 },intervaltime);
-
-
 
 
 

@@ -1,2 +1,4 @@
 *.ZIP
 *makara.code-workspace
+*.java
+*.class
