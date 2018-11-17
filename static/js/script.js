@@ -21,7 +21,7 @@ var songurl;
 setInterval(function info(){
   $.ajax({
     method: "GET",
-    url: "https://api.iconicto.com/rathumakara/player_status/",
+    url: "/player_status/",
     dataType: "json",
     cache: false,
     success: function(jsonReturn){
