@@ -14,6 +14,7 @@ Add to queue button = btn-addtoqueue
 var ispaused;
 var songName;
 var intervaltime = 500;
+var songurl;
 
 
 //Refresh data => Ajax async
@@ -116,7 +117,6 @@ function autoplay(){
   }); 
 };
 
-
 function playnow(){
     $.post("http://178.128.222.109:5000/API/bot/request/", {
       "authToken": "kdjfklsfslkfsd",
@@ -163,6 +163,15 @@ function playnow(){
     })
   }
   
+  function addtoqueue(){
+    $.post("http://178.128.222.109:5000/API/bot/request/", {
+      "authToken": "kdjfklsfslkfsd",
+      "cmd": "queue",
+      "args": vidurl,
+    });
+  }
+
+
 
   //Youtube Data API v3
 
@@ -185,6 +194,7 @@ function playnow(){
                 $.each(srchItems, function(index, item) {
                 vidTitle = item.snippet.title;  
                 vidId = item.id.videoId;
+                vidurl = "https://www.youtube.com/watch?v=" + vidId;
                 vidDescription = item.snippet.description;
                 vidThumburl =  item.snippet.thumbnails.medium.url; 
                 var thumbUrl = vidThumburl;
@@ -195,13 +205,4 @@ function playnow(){
                         
         })  
   })  
-  }
-
-
-  function addtoqueue(){
-    $.post("http://178.128.222.109:5000/API/bot/request/",{
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "addToQueue",
-      "args":"https://www.youtube.com/watch?v="+vidId,
-    })
   }
