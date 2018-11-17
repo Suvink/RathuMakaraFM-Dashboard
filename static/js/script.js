@@ -55,43 +55,6 @@ setInterval(function info(){
         ul.appendChild(li);
       }
 
-
-//      //Fetch Queue
-//      $("#q_np").text(s_name); //nowplaying
-//
-//      var a = jsonReturn.queue[0];
-//      $("#s_1").text(a.song);
-//
-//      var b = jsonReturn.queue[1];
-//      $("#s_2").text(b.song);
-//
-//      var c = jsonReturn.queue[2];
-//      $("#s_3").text(c.song);
-//
-//      var d = jsonReturn.queue[3];
-//      $("#s_4").text(d.song);
-//
-//      var e = jsonReturn.queue[4];
-//      $("#s_5").text(e.song);
-//
-//      var f = jsonReturn.queue[5];
-//      $("#s_6").text(f.song);
-//
-//      var g = jsonReturn.queue[6];
-//      $("#s_7").text(g.song);
-//
-//      var h = jsonReturn.queue[7];
-//      $("#s_8").text(h.song);
-//
-//      var i = jsonReturn.queue[8];
-//      $("#s_9").text(i.song);
-//
-//      var j = jsonReturn.queue[9];
-//      $("#s_10").text(j.song);
-//
-//      var k = jsonReturn.queue[10];
-//      $("#s_11").text(k.song);
-
     },
     error: function error(){
       console.log(error);
