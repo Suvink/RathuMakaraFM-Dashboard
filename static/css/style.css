@@ -1,5 +1,5 @@
 body{
-    background-image: url("img/bg.jpg");
+    background-image: url("/static/img/bg.jpg");
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 .progress{

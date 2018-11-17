@@ -85,10 +85,10 @@ setInterval(function info(){
     },
     error: function error(){
       console.log(error);
-      console.clear();
+//      console.clear();
     }
   });  
-},intervaltime);
+}, intervaltime);
 
 
 
