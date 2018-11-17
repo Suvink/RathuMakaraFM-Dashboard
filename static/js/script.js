@@ -15,14 +15,13 @@ var ispaused;
 var songName;
 var intervaltime = 500;
 var songurl;
-var posturl = "http://178.128.222.109:5000/API/bot/request/";
 
 
 //Refresh data => Ajax async
 setInterval(function info(){
   $.ajax({
     method: "GET",
-    url: "http://api.iconicto.com/rathumakara/player_status/",
+    url: "https://api.iconicto.com/rathumakara/player_status/",
     dataType: "json",
     cache: false,
     success: function(jsonReturn){
@@ -117,61 +116,6 @@ function autoplay(){
     }
   }); 
 };
-
-function playnow(){
-    $.post(posturl, {
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "play",
-    });
-  }
-  
-  function pausenow(){
-    $.post(posturl, {
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "pause",
-    });
-  }
-  
-  function skipnow(){
-    $.post(posturl,{
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "skip",
-    })
-  }
-  
-  function volume_low(){
-    $.post(posturl,{
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "volume",
-      "args": "5"
-    })
-  }
-  
-  function volume_high(){
-    $.post(posturl,{
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "volume",
-      "args": "100"
-    })
-  }
-
-  function custom_vol(){
-    var vol = document.getElementById('setvol').value;
-    $.post(posturl,{
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "volume",
-      "args": vol
-    })
-  }
-  
-  function addtoqueue(){
-    $.post(posturl, {
-      "authToken": "kdjfklsfslkfsd",
-      "cmd": "queue",
-      "args": vidurl,
-    });
-  }
-
 
 
   //Youtube Data API v3
