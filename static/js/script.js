@@ -49,7 +49,7 @@ setInterval(function info(){
 
       for (var i = 0; i < jsonReturn.queue.length; i++) {
         var li = document.createElement("li");
-        var con = jsonReturn.queue[i].song+" by "+ jsonReturn.queue[i].uploader + '<span class="badge badge-danger badge-pill"'+i+'</span'
+        var con = jsonReturn.queue[i].song+" by "+ jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill"'+i+'</span>'
         li.appendChild(document.createTextNode(con));
         li.setAttribute("id", "s_"+i);
         li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
@@ -72,56 +72,36 @@ function showDiv(videoinfo){
     
 }
 
-function pause() {
-  var x = document.getElementById('btn-pause');
+//Youtube Data API v3
 
-  if (x.innerHTML == "PAUSE"){
-    x.innerHTML = "PLAY";
-  } else {
-    x.innerHTML = "PAUSE";
-  }
+function keyWordsearch(){
+gapi.client.setApiKey('AIzaSyBpkvDP5X_E0D3Jdzq-14SVugYzdaF82AQ');
+gapi.client.load('youtube', 'v3', function() {
+        makeRequest();
+});
 }
-
-function autoplay(){
-  var btn_ap = document.getElementById('btn-autoplay');
-  $('.btn-autoplay').click(function() {
-    if($this.innerHTML("Autoplay Off")){
-      btn_ap.innerHTML = "Autoplay On"
-    }
-  }); 
-};
-
-
-  //Youtube Data API v3
-
-  function keyWordsearch(){
-    gapi.client.setApiKey('AIzaSyBpkvDP5X_E0D3Jdzq-14SVugYzdaF82AQ');
-    gapi.client.load('youtube', 'v3', function() {
-            makeRequest();
+function makeRequest() {
+    var q = $('#songname').val();
+    var request = gapi.client.youtube.search.list({
+            q: q,
+            part: 'snippet',
+            maxResults: 1
     });
-  }
-  function makeRequest() {
-        var q = $('#songname').val();
-        var request = gapi.client.youtube.search.list({
-                q: q,
-                part: 'snippet', 
-                maxResults: 1
-        });
-        request.execute(function(response) {                                                                                    
-                $('#results').empty()
-                var srchItems = response.result.items;                      
-                $.each(srchItems, function(index, item) {
-                vidTitle = item.snippet.title;  
-                vidId = item.id.videoId;
-                vidurl = "https://www.youtube.com/watch?v=" + vidId;
-                vidDescription = item.snippet.description;
-                vidThumburl =  item.snippet.thumbnails.medium.url; 
-                var thumbUrl = vidThumburl;
-                songName = vidTitle;
-                $("#ytThumb").attr("src",thumbUrl);
-                $("#ytName").text(songName);
-                $("#ytDes").text(vidDescription);
-                        
-        })  
-  })  
-  }
+    request.execute(function(response) {
+            $('#results').empty()
+            var srchItems = response.result.items;
+            $.each(srchItems, function(index, item) {
+            vidTitle = item.snippet.title;
+            vidId = item.id.videoId;
+            vidurl = "https://www.youtube.com/watch?v=" + vidId;
+            vidDescription = item.snippet.description;
+            vidThumburl =  item.snippet.thumbnails.medium.url;
+            var thumbUrl = vidThumburl;
+            songName = vidTitle;
+            $("#ytThumb").attr("src",thumbUrl);
+            $("#ytName").text(songName);
+            $("#ytDes").text(vidDescription);
+
+    })
+})
+}
