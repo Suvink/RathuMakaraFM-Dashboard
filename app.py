@@ -1,3 +1,4 @@
+import json
 import os
 from flask import Flask, session, redirect, request, url_for, jsonify, render_template
 from requests_oauthlib import OAuth2Session
@@ -72,6 +73,26 @@ def me():
     guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
     connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
     return jsonify(user=user, guilds=guilds, connections=connections)
+
+
+@app.route('/player_status/', methods=["GET"])
+def get_player_status():
+    try:
+        with open('/root/RathuMakaraFM-DiscordBot/status.json') as f:
+            data = json.load(f)
+
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(
+            {
+                "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
+                                "duration": None, "progress": None, "extractor": None, "requester": None,
+                                "is_pause": False},
+                'queue': [],
+                "is_pause": False,
+                "auto_play": False
+            }
+        )
 
 
 if __name__ == '__main__':
