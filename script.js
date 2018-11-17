@@ -20,7 +20,7 @@ var intervaltime = 500;
 setInterval(function info(){
   $.ajax({
     method: "GET",
-    url: "https://api.iconicto.com/rathumakara/player_status/",
+    url: "http://api.iconicto.com/rathumakara/player_status/",
     dataType: "json",
     cache: false,
     success: function(jsonReturn){
