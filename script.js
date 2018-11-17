@@ -15,6 +15,7 @@ var ispaused;
 var songName;
 var intervaltime = 500;
 var songurl;
+var posturl = "http://178.128.222.109:5000/API/bot/request/";
 
 
 //Refresh data => Ajax async
@@ -118,28 +119,28 @@ function autoplay(){
 };
 
 function playnow(){
-    $.post("http://178.128.222.109:5000/API/bot/request/", {
+    $.post(posturl, {
       "authToken": "kdjfklsfslkfsd",
       "cmd": "play",
     });
   }
   
   function pausenow(){
-    $.post("http://178.128.222.109:5000/API/bot/request/", {
+    $.post(posturl, {
       "authToken": "kdjfklsfslkfsd",
       "cmd": "pause",
     });
   }
   
   function skipnow(){
-    $.post("http://178.128.222.109:5000/API/bot/request/",{
+    $.post(posturl,{
       "authToken": "kdjfklsfslkfsd",
       "cmd": "skip",
     })
   }
   
   function volume_low(){
-    $.post("http://178.128.222.109:5000/API/bot/request/",{
+    $.post(posturl,{
       "authToken": "kdjfklsfslkfsd",
       "cmd": "volume",
       "args": "5"
@@ -147,7 +148,7 @@ function playnow(){
   }
   
   function volume_high(){
-    $.post("http://178.128.222.109:5000/API/bot/request/",{
+    $.post(posturl,{
       "authToken": "kdjfklsfslkfsd",
       "cmd": "volume",
       "args": "100"
@@ -156,7 +157,7 @@ function playnow(){
 
   function custom_vol(){
     var vol = document.getElementById('setvol').value;
-    $.post("http://178.128.222.109:5000/API/bot/request/",{
+    $.post(posturl,{
       "authToken": "kdjfklsfslkfsd",
       "cmd": "volume",
       "args": vol
@@ -164,11 +165,12 @@ function playnow(){
   }
   
   function addtoqueue(){
-    $.post("http://178.128.222.109:5000/API/bot/request/", {
+    $.post(posturl, {
       "authToken": "kdjfklsfslkfsd",
       "cmd": "queue",
       "args": vidurl,
     });
+    console.log(vidurl);
   }
 
 
