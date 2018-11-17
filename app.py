@@ -36,9 +36,7 @@ def make_session(token=None, state=None, scope=None):
         token_updater=token_updater)
 
 
-app.route('/')
-
-
+@app.route('/')
 def index():
     return render_template('index.html')
 
