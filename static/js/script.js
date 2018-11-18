@@ -10,9 +10,6 @@ custom volume text area = setvol
 Add to queue button = btn-addtoqueue
 */
 
-//Global Variables
-const interval_time = 500;
-
 //Refresh data => Ajax async
 setInterval(function info() {
     $.ajax({
@@ -62,7 +59,7 @@ setInterval(function info() {
             console.log(error);
         }
     });
-}, interval_time);
+}, 700);
 
 
 
