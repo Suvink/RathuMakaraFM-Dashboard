@@ -51,11 +51,11 @@
 
 
             <div class="container text-center" id="buttons">
-                <a href="{{ url_for('bot_play') }}"><button type="button" id="btn-pause" class="btn btn-success btn-sm">Pause</button>
-                <a href="{{ url_for('bot_skip') }}"><button type="button" id="btn-skip" class="btn btn-danger btn-sm">Skip</button>
-                <a href="{{ url_for('bot_volume_high') }}"><button type="button" id="btn-volume_high" class="btn btn-default btn-sm">High Vol</button>
-                <a href="{{ url_for('bot_volume_low') }}"><button type="button" id="btn-volume-low" class="btn btn-primary btn-sm">Low Vol</button>
-                <a href="{{ url_for('bot_autoplay_disable') }}"><button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm">Autoplay</button>
+                <a href="{{ url_for('bot_play') }}"><button type="button" id="btn-pause" class="btn btn-success btn-sm">Pause</button></a>
+                <a href="{{ url_for('bot_skip') }}"><button type="button" id="btn-skip" class="btn btn-danger btn-sm">Skip</button></a>
+                <a href="{{ url_for('bot_volume_high') }}"><button type="button" id="btn-volume_high" class="btn btn-default btn-sm">High Vol</button></a>
+                <a href="{{ url_for('bot_volume_low') }}"><button type="button" id="btn-volume-low" class="btn btn-primary btn-sm">Low Vol</button></a>
+                <a href="{{ url_for('bot_autoplay_disable') }}"><button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm">Autoplay</button></a>
 
                 <div class="container text-center" >
                     <form action="{{ url_for('bot_set_volume') }}" method="post">
