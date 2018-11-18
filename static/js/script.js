@@ -52,6 +52,24 @@ setInterval(function info() {
 
             const ul = document.getElementById("queuecontent");
             const items = ul.getElementsByTagName("li");
+            
+            const ul = document.getElementById("queuecontent");
+            const items = ul.getElementsByTagName("li");
+
+            const tot_durmin = Math.floor(jsonReturn.now_playing.duration / 60);
+            const tot_dursec = jsonReturn.now_playing.duration % 60;
+
+            const np_durmin = Math.floor(jsonReturn.now_playing.progress / 60);
+            const np_dursec = jsonReturn.now_playing.progress % 60;
+
+            if (np_durmin>60){
+                const np_hr = Math.floor(np_durmin/60);
+                np_durmin = np_durmin%60;
+            }
+             if (tot_durmin){
+                 const tot_hr = Math.floor(tot_durmin/60);
+                 tot_durmin = tot_durmin%60;
+             }
 
             if (items.length > jsonReturn.queue.length) {
                 for (let i = jsonReturn.queue.length; i < items.length; ++i) {
