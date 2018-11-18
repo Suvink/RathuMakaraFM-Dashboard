@@ -20,7 +20,7 @@ setInterval(function info() {
         success: function(jsonReturn) {
             $("#npName").text(jsonReturn.now_playing.song);
             $("#npthumb").attr("src", jsonReturn.now_playing.thumbnai);
-            $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester;);
+            $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester);
 
             //fetch progress
             const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);
