@@ -174,7 +174,7 @@ def bot_volume_low():
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "volume",
-                            "args": "100"}).json()
+                            "args": "5"}).json()
     if 'error' in r:
         flash(r['error'])
     return redirect(url_for('index'))
@@ -205,7 +205,7 @@ def bot_set_volume():
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
-                                "args": int(request.form['volume_level'])}).json()
+                                "args": str(request.form['volume_level'])}).json()
         if 'error' in r:
             flash(r['error'])
         return redirect(url_for('index'))
@@ -268,7 +268,8 @@ def get_player_status():
                                 "is_pause": False},
                 'queue': [],
                 "is_pause": False,
-                "auto_play": False
+                "auto_play": False,
+                "volume": 100
             }
         )
 
