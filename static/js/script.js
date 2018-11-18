@@ -46,9 +46,12 @@ setInterval(function info() {
             var items = ul.getElementsByTagName("li");
             for (var i = 0; i < items.length; ++i) {
                 // do something with items[i], which is a <li> element
-                items[i].innerHTML = jsonReturn.queue[i].song + " by " + jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill">' + i + 1 + '</span>';
-                items[i].setAttribute("id", "s_" + i);
-                items[i].setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
+                var new_innerHTML = jsonReturn.queue[i].song + " by " + jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill">' + i + 1 + '</span>';
+                if(items[i].innerHTML !== new_innerHTML){
+                    items[i].innerHTML = new_innerHTML;
+                    items[i].setAttribute("id", "s_" + i);
+                    items[i].setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
+                }
             }
 
             for (var i = items.length; i < jsonReturn.queue.length; i++) {
