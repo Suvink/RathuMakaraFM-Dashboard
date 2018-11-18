@@ -11,7 +11,6 @@ Add to queue button = btn-addtoqueue
 */
 
 //Global Variables
-const songName;
 const interval_time = 500;
 
 //Refresh data => Ajax async
@@ -100,9 +99,8 @@ function makeRequest() {
             vidDescription = item.snippet.description;
             vidThumburl = item.snippet.thumbnails.medium.url;
             const thumbUrl = vidThumburl;
-            songName = vidTitle;
             $("#ytThumb").attr("src", thumbUrl);
-            $("#ytName").text(songName);
+            $("#ytName").text(vidTitle);
             $("#ytDes").text(vidDescription);
 
         })
