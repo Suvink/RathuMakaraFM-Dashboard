@@ -98,5 +98,45 @@ def get_player_status():
         )
 
 
+@app.route('/bot/play/')
+def bot_play():
+    return True
+
+
+@app.route('/bot/pause/')
+def bot_pause():
+    return True
+
+
+@app.route('/bot/skip/')
+def bot_skip():
+    return True
+
+
+@app.route('/bot/volume/high/')
+def bot_volume_high():
+    return True
+
+
+@app.route('/bot/volume/low/')
+def bot_volume_low():
+    return True
+
+
+@app.route('/bot/autoplay/enable')
+def bot_autoplay_enable():
+    return True
+
+
+@app.route('/bot/autoplay/disable')
+def bot_autoplay_disable():
+    return True
+
+
+@app.route('/bot/volume/set/', methods=["POST"])
+def bot_set_volume():
+    return True
+
+
 if __name__ == '__main__':
     app.run()
