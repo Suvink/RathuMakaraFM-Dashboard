@@ -29,21 +29,21 @@ setInterval(function info() {
 
             if(jsonReturn.is_pause && $("#btn-pause").html() !== "Resume"){
                 $("#btn-pause").html('Resume');
-                $('#btn-pause').toggleClass('btn-success btn-warning');
-            }
-            else if (!jsonReturn.is_pause && $("#btn-pause").html() !== "Pause"){
-                $("#btn-pause").html('Pause');
-                $('#btn-pause').toggleClass('btn-warning btn-success');
+                $('#btn-pause').attr('class', 'btn btn-warning btn-sm');
             }
 
+            else if (!jsonReturn.is_pause && $("#btn-pause").html() !== "Pause"){
+                $("#btn-pause").html('Pause');
+                $('#btn-pause').attr('class', 'btn btn-success btn-sm');
+            }
 
             if(jsonReturn.auto_play && $("#btn-pause").html() !== "Disable AutoPlay"){
                 $("#btn-autoplay").html('Disable AutoPlay');
-                $('#btn-autoplay').toggleClass('btn-unique btn-indigo');
+                $('#btn-autoplay').attr('class', 'btn btn-indigo btn-sm');
             }
             else if (!jsonReturn.auto_play && $("#btn-pause").html() !== "Enable AutoPlay"){
                 $("#btn-autoplay").html('Enable AutoPlay');
-                $('#btn-autoplay').toggleClass('btn-indigo btn-unique');
+                $('#btn-autoplay').attr('class', 'btn btn-unique btn-sm');
             }
 
             //fetch progress
