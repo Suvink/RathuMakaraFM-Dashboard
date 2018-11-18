@@ -19,7 +19,7 @@ setInterval(function info() {
         cache: false,
         success: function(jsonReturn) {
             $("#npName").text(jsonReturn.now_playing.song);
-            $("#npthumb").attr("src", jsonReturn.now_playing.thumbnai);
+            $("#npthumb").attr("src", jsonReturn.now_playing.thumbnail);
             $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester);
 
             //fetch progress
