@@ -85,7 +85,7 @@ def get_player_status():
             data = json.load(f)
 
         return jsonify(data)
-    except Exception as e:
+    except:
         return jsonify(
             {
                 "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
