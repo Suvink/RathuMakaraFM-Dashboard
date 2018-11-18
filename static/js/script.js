@@ -24,7 +24,7 @@ setInterval(function info() {
 
             //fetch progress
             const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);
-            $("#npprogress").attr("style", "width:" + progresspc + "%";);
+            $("#npprogress").attr("style", "width:" + progresspc + "%");
 
             const ul = document.getElementById("queuecontent");
             const items = ul.getElementsByTagName("li");
