@@ -138,5 +138,15 @@ def bot_set_volume():
     return True
 
 
+@app.route('/bot/request/song/', methods=["POST"])
+def bot_request_song():
+    return True
+
+
+@app.route('/bot/clear/queue/')
+def bot_clear_queue():
+    return True
+
+
 if __name__ == '__main__':
     app.run()
