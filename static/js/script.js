@@ -41,7 +41,6 @@ setInterval(function info() {
             $("#npprogress").attr("style", post);
 
             var ul = document.getElementById("queuecontent");
-            while (ul.firstChild) ul.removeChild(ul.firstChild);
 
             var items = ul.getElementsByTagName("li");
             for (var i = 0; i < items.length; ++i) {
