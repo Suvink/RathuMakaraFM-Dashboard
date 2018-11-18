@@ -18,9 +18,29 @@ setInterval(function info() {
         dataType: "json",
         cache: false,
         success: function(jsonReturn) {
-            $("#npName").text(jsonReturn.now_playing.song);
-            $("#npthumb").attr("src", jsonReturn.now_playing.thumbnail);
-            $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester);
+            if ($("#npName").text() !== jsonReturn.now_playing.song)
+                $("#npName").text(jsonReturn.now_playing.song);
+
+            if ($("#npthumb").attr("src") !== jsonReturn.now_playing.thumbnail)
+                $("#npthumb").attr("src", jsonReturn.now_playing.thumbnail);
+
+            if ($("#npreq").text() !== jsonReturn.now_playing.requester)
+                $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester);
+
+            if(jsonReturn.is_pause && $("#btn-pause").html() !== "Resume"){
+                $("#btn-pause").html('Resume');
+            }
+            else if (!jsonReturn.is_pause && $("#btn-pause").html() !== "Pause"){
+                $("#btn-pause").html('Pause');
+            }
+
+
+            if(jsonReturn.auto_play && $("#btn-pause").html() !== "Disable AutoPlay"){
+                $("#btn-autoplay").html('Disable AutoPlay');
+            }
+            else if (!jsonReturn.auto_play && $("#btn-pause").html() !== "Enable AutoPlay"){
+                $("#btn-autoplay").html('Enable AutoPlay');
+            }
 
             //fetch progress
             const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);

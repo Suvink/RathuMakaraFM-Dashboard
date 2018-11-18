@@ -52,11 +52,11 @@
 
             <div class="container text-center" id="buttons">
                 {% if session.logged_in %}
-                <a href="{{ url_for('bot_play') }}"><button type="button" id="btn-pause" class="btn btn-success btn-sm">Pause</button></a>
+                <a href="{{ url_for('bot_toggle_play') }}"><button type="button" id="btn-pause" class="btn btn-success btn-sm">Pause</button></a>
                 <a href="{{ url_for('bot_skip') }}"><button type="button" id="btn-skip" class="btn btn-danger btn-sm">Skip</button></a>
                 <a href="{{ url_for('bot_volume_high') }}"><button type="button" id="btn-volume_high" class="btn btn-default btn-sm">High Vol</button></a>
                 <a href="{{ url_for('bot_volume_low') }}"><button type="button" id="btn-volume-low" class="btn btn-primary btn-sm">Low Vol</button></a>
-                <a href="{{ url_for('bot_autoplay_disable') }}"><button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm">Autoplay</button></a>
+                <a href="{{ url_for('bot_toggle_autoplay') }}"><button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm">Disable Autoplay</button></a>
 
                 <div class="container text-center" >
                     <form action="{{ url_for('bot_set_volume') }}" method="post">
@@ -72,7 +72,7 @@
                 <button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm">Autoplay</button>
 
                 <div class="container text-center" >
-                    <form method="post">
+                    <form>
                         <input class="form-control form-control-sm" name="volume_level" id="setvol" type="number" max="100" min="0" placeholder="Volume">
                         <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-check mr-1"></i></button>
                     </form>
@@ -153,7 +153,7 @@
                                 <!-- Button -->
                                 <form action="{{ url_for('bot_request_song') }}" method="post">
                                     <input type="hidden" id="yt_song_url" name="yt_song_url" value="">
-                                    <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" id = "btn-addtoqueue" data-target="#notifymodal" data-dismiss="modal">Add to Queue</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal">Add to Queue</button>
                                 </form>
                                 </div>
                         </div>
@@ -203,6 +203,35 @@
         <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
         <!-- Youtube Data API -->
         <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
+
+        <div class="modal fade " id="flash" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 100px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="alert-danger modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <br/>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <script>
+                            $(document).ready(function(){
+                                $("#flash").modal();
+                            });
+                        </script>
+                        <div class="container-fluid">
+                        <ul class="list-unstyled">
+                        {% for message in messages %}
+                            <li class="text-center text-dark">{{message}}</li>
+                        {% endfor %}
+                        </ul>
+                        </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                </div>
+            </div>
+        </div>
 
     </body>
 </html>
