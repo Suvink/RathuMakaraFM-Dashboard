@@ -26,9 +26,9 @@
                 <form class="form-inline my-1">
                     {% if session.logged_in %}
                     <span class="navbar-text white-text text-right" style="font-style: italic">Welcome Dumbledore#6249</span>
-                    <button class="btn btn-success btn-sm my-0" type="submit"><a href="/logout/"><i class="fa fa-user mr-2"></i>Logout</a></button>
+                    <a href="/logout/"><button class="btn btn-success btn-sm my-0" type="submit"><i class="fa fa-user mr-2"></i>Logout</button></a>
                     {% else %}
-                    <button class="btn btn-success btn-sm my-0" type="submit"><a href="/login/"><i class="fa fa-user mr-2"></i>Login</a></button>
+                    <a href="/login/"><button class="btn btn-success btn-sm my-0" type="submit"><i class="fa fa-user mr-2"></i>Login</button></a>
                     {% endif %}
                 </form>
             </nav>
