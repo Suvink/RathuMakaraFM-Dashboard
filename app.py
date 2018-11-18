@@ -42,7 +42,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/auth/')
+@app.route('/login/')
 def auth():
     scope = request.args.get(
         'scope',
