@@ -58,12 +58,14 @@ def dj_required(f):
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id']}).json()
         try:
-            if '485449088360382465' in r['roles']:
+            if 485449088360382465 in r['roles']:
                 return f(*args, **kwargs)
             else:
                 flash("You need to be a DJ to perform this action")
                 return redirect(request.referrer)
-        except:
+        except Exception as e:
+            app.logger.error("Checking User Roles")
+            app.logger.exception(e)
             if 'error' in r:
                 flash(r['error'])
             else:
@@ -113,28 +115,6 @@ def callback():
 def logout():
     session.clear()
     return redirect(url_for('index'))
-
-
-@app.route('/player_status/', methods=["GET"])
-def get_player_status():
-    try:
-        with open('/root/RathuMakaraFM-DiscordBot/status.json') as f:
-            data = json.load(f)
-
-        return jsonify(data)
-    except Exception as e:
-        app.logger.error("Reading status.json")
-        app.logger.exception(e)
-        return jsonify(
-            {
-                "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
-                                "duration": None, "progress": None, "extractor": None, "requester": None,
-                                "is_pause": False},
-                'queue': [],
-                "is_pause": False,
-                "auto_play": False
-            }
-        )
 
 
 @app.route('/bot/toggle/play/')
@@ -269,6 +249,28 @@ def bot_clear_queue():
         flash(r['error'])
     return redirect(url_for('index'))
 
+
+@app.route('/player_status/', methods=["GET"])
+def get_player_status():
+    try:
+        with open('/root/RathuMakaraFM-DiscordBot/status.json', "r") as f:
+            data = json.load(f)
+
+        return jsonify(data)
+    except Exception as e:
+        app.logger.error("Reading status.json")
+        app.logger.error(str(open('/root/RathuMakaraFM-DiscordBot/status.json', "r").read()))
+        app.logger.exception(e)
+        return jsonify(
+            {
+                "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
+                                "duration": None, "progress": None, "extractor": None, "requester": None,
+                                "is_pause": False},
+                'queue': [],
+                "is_pause": False,
+                "auto_play": False
+            }
+        )
 
 if __name__ == '__main__':
     app.run()
