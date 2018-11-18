@@ -51,7 +51,7 @@ setInterval(function info() {
             var items = ul.getElementsByTagName("li");
             for (var i = 0; i < items.length; ++i) {
                 var song_number = i + 1;
-                var new_innerHTML = '<a href="'jsonReturn.queue[i].url'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
+                var new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
                 if(items[i].innerHTML != new_innerHTML){
                     items[i].innerHTML = new_innerHTML;
                 }
@@ -60,7 +60,7 @@ setInterval(function info() {
             for (var i = items.length; i < jsonReturn.queue.length; i++) {
                 var li = document.createElement("li");
                 var song_number = i + 1;
-                li.innerHTML = '<a href="'jsonReturn.queue[i].url'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
+                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
                 li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
                 ul.appendChild(li);
             }
