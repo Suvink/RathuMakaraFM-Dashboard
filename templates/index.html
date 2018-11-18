@@ -65,16 +65,16 @@
                     </form>
                 </div>
                 {% else %}
-                <button type="button" id="btn-pause" class="btn btn-success btn-sm" disabled>Pause</button>
-                <button type="button" id="btn-skip" class="btn btn-danger btn-sm" disabled>Skip</button>
-                <button type="button" id="btn-volume_high" class="btn btn-default btn-sm" disabled>High Vol</button>
-                <button type="button" id="btn-volume-low" class="btn btn-primary btn-sm" disabled>Low Vol</button>
-                <button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm" disabled>Autoplay</button>z
+                <button type="button" id="btn-pause" class="btn btn-success btn-sm">Pause</button>
+                <button type="button" id="btn-skip" class="btn btn-danger btn-sm">Skip</button>
+                <button type="button" id="btn-volume_high" class="btn btn-default btn-sm">High Vol</button>
+                <button type="button" id="btn-volume-low" class="btn btn-primary btn-sm">Low Vol</button>
+                <button type="button" id="btn-autoplay" class="btn btn-indigo btn-sm">Autoplay</button>
 
                 <div class="container text-center" >
                     <form method="post">
                         <input class="form-control form-control-sm" name="volume_level" id="setvol" type="number" max="100" min="0" placeholder="Volume">
-                        <button type="submit" class="btn btn-info btn-sm" disabled><i class="fa fa-check mr-1"></i></button>
+                        <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-check mr-1"></i></button>
                     </form>
                 </div>
                 {% endif %}
@@ -104,9 +104,13 @@
                     </div>
 
                     <div class="col-sm-4">
+                        {% if session.logged_in %}
                             <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addsong"  style="display:inline-block">Add a song</button><br>
+                            <a href="{{ url_for('bot_clear_queue') }}"><button type="button" class="btn btn-danger btn-lg" id ="clearq" style="display:inline-block">Clear Queue</button></a>
+                        {% else %}
+                            <button type="button" class="btn btn-primary btn-lg" style="display:inline-block">Add a song</button><br>
                             <button type="button" class="btn btn-danger btn-lg" id ="clearq" style="display:inline-block">Clear Queue</button>
-                            
+                        {% endif %}
                     </div>
 
                 </div>       
@@ -147,13 +151,14 @@
                                 <!-- Description -->
                                 <p class="card-text" id = "ytDes">Video Description loading....</p>
                                 <!-- Button -->
-                                <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" id = "btn-addtoqueue" data-target="#notifymodal" data-dismiss="modal" onclick="addtoqueue();">Add to Queue</a>
-                            
+                                <form action="{{ url_for('bot_request_song') }}" method="post">
+                                    <input type="hidden" id="yt_song_url" name="yt_song_url" value="">
+                                    <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" id = "btn-addtoqueue" data-target="#notifymodal" data-dismiss="modal">Add to Queue</button>
+                                </form>
                                 </div>
                         </div>
                     </div>
 
-        
                 </div>
             </div>
         </div>

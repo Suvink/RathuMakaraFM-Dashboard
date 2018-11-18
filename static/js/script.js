@@ -99,6 +99,8 @@ function makeRequest() {
             $("#ytThumb").attr("src", thumbUrl);
             $("#ytName").text(vidTitle);
             $("#ytDes").text(vidDescription);
+            $("#yt_song_url").value(vidurl);
+
 
         })
     })
