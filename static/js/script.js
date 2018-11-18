@@ -42,30 +42,30 @@ setInterval(function info() {
 
             var ul = document.getElementById("queuecontent");
 
+            if (items.length > jsonReturn.queue.length) {
+                for (var i = jsonReturn.queue.length; i < items.length; ++i) {
+                    ul.removeChild(items[i])
+                }
+            }
+
             var items = ul.getElementsByTagName("li");
             for (var i = 0; i < items.length; ++i) {
                 var song_number = i + 1;
-                var new_innerHTML = jsonReturn.queue[i].song + " by " + jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill">' + song_number + '</span>';
+                var new_innerHTML = '<a href="'jsonReturn.queue[i].url'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
                 if(items[i].innerHTML != new_innerHTML){
                     items[i].innerHTML = new_innerHTML;
                 }
             }
 
             for (var i = items.length; i < jsonReturn.queue.length; i++) {
-                console.log("Creating New Li", items.length, jsonReturn.queue.length);
                 var li = document.createElement("li");
                 var song_number = i + 1;
-                li.innerHTML = jsonReturn.queue[i].song + " by " + jsonReturn.queue[i].uploader + ' <span class="badge badge-danger badge-pill">' + song_number + '</span>';
+                li.innerHTML = '<a href="'jsonReturn.queue[i].url'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
                 li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
                 ul.appendChild(li);
             }
 
-            if (items.length > jsonReturn.queue.length) {
-                console.log("Removing extra elements", items.length, jsonReturn.queue.length);
-                for (var i = jsonReturn.queue.length; i < items.length; ++i) {
-                    ul.removeChild(items[i])
-                }
-            }
+
 
         },
         error: function error() {
