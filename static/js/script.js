@@ -29,17 +29,21 @@ setInterval(function info() {
 
             if(jsonReturn.is_pause && $("#btn-pause").html() !== "Resume"){
                 $("#btn-pause").html('Resume');
+                $('#btn-pause').toggleClass('btn-success btn-warning');
             }
             else if (!jsonReturn.is_pause && $("#btn-pause").html() !== "Pause"){
                 $("#btn-pause").html('Pause');
+                $('#btn-pause').toggleClass('btn-warning btn-success');
             }
 
 
             if(jsonReturn.auto_play && $("#btn-pause").html() !== "Disable AutoPlay"){
                 $("#btn-autoplay").html('Disable AutoPlay');
+                $('#btn-autoplay').toggleClass('btn-unique btn-indigo');
             }
             else if (!jsonReturn.auto_play && $("#btn-pause").html() !== "Enable AutoPlay"){
                 $("#btn-autoplay").html('Enable AutoPlay');
+                $('#btn-autoplay').toggleClass('btn-indigo btn-unique');
             }
 
             //fetch progress

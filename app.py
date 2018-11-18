@@ -185,12 +185,14 @@ def bot_volume_low():
 @dj_required
 def bot_toggle_autoplay():
     bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
-
+    arg = "on"
+    if bot_status['auto_play']:
+        arg = "off"
     r = requests.post('http://178.128.222.109:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "autoplay",
-                            "args": not bool(bot_status['auto_play'])}).json()
+                            "args": arg}).json()
     if 'error' in r:
         flash(r['error'])
     return redirect(url_for('index'))
