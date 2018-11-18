@@ -121,7 +121,7 @@ def logout():
 @login_required
 @dj_required
 def bot_toggle_play():
-    bot_status = requests.get(url_for('get_player_status')).json()
+    bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
     j = {"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
          "user_id": session['discord_id'],
          "cmd": "pause",
@@ -184,7 +184,7 @@ def bot_volume_low():
 @login_required
 @dj_required
 def bot_toggle_autoplay():
-    bot_status = requests.get(url_for('get_player_status')).json()
+    bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
 
     r = requests.post('http://178.128.222.109:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
@@ -271,6 +271,7 @@ def get_player_status():
                 "auto_play": False
             }
         )
+
 
 if __name__ == '__main__':
     app.run()
