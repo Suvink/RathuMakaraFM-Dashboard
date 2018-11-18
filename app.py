@@ -5,7 +5,7 @@ from requests_oauthlib import OAuth2Session
 
 OAUTH2_CLIENT_ID = "498036184501714944"
 OAUTH2_CLIENT_SECRET = "q8nOQLkd-jdKJUVC2jonYLitYsDOADiL"
-OAUTH2_REDIRECT_URI = 'https://rathumakara.iconicto.com/callback'
+OAUTH2_REDIRECT_URI = 'https://rathumakara.iconicto.com/callback/'
 
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
@@ -63,6 +63,7 @@ def callback():
         client_secret=OAUTH2_CLIENT_SECRET,
         authorization_response=request.url)
     session['oauth2_token'] = token
+    session['logged_in'] = True
     return redirect(url_for('.me'))
 
 
