@@ -25,10 +25,10 @@
 
                 <form class="form-inline my-1">
                     {% if session.logged_in %}
-                    <span class="navbar-text white-text text-right" style="font-style: italic">Welcome Dumbledore#6249</span>
-                    <a href="{{ url_for('register') }}"><button class="btn btn-success btn-sm my-0" type="button"><i class="fa fa-user mr-2"></i>Logout</button></a>
+                    <span class="navbar-text white-text text-right" style="font-style: italic">Welcome {{ session.discord_username }}#{{ session.discord_discriminator }}</span>
+                    <a href="{{ url_for('logout') }}"><button class="btn btn-success btn-sm my-0" type="button"><i class="fa fa-user mr-2"></i>Logout</button></a>
                     {% else %}
-                    <a href="{{ url_for('auth') }}"><button class="btn btn-success btn-sm my-0" type="button"><i class="fa fa-user mr-2"></i>Login</button></a>
+                    <a href="{{ url_for('login') }}"><button class="btn btn-success btn-sm my-0" type="button"><i class="fa fa-user mr-2"></i>Login</button></a>
                     {% endif %}
                 </form>
             </nav>

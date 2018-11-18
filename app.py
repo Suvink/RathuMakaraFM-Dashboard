@@ -43,10 +43,10 @@ def index():
 
 
 @app.route('/login/')
-def auth():
+def login():
     scope = request.args.get(
         'scope',
-        'identify email connections guilds guilds.join')
+        'identify')
     discord = make_session(scope=scope.split(' '))
     authorization_url, state = discord.authorization_url(AUTHORIZATION_BASE_URL)
     session['oauth2_state'] = state
@@ -64,16 +64,18 @@ def callback():
         authorization_response=request.url)
     session['oauth2_token'] = token
     session['logged_in'] = True
-    return redirect(url_for('.me'))
-
-
-@app.route('/me/')
-def me():
     discord = make_session(token=session.get('oauth2_token'))
     user = discord.get(API_BASE_URL + '/users/@me').json()
-    guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json()
-    connections = discord.get(API_BASE_URL + '/users/@me/connections').json()
-    return jsonify(user=user, guilds=guilds, connections=connections)
+    session['discord_id'] = user['id']
+    session['discord_username'] = user['username']
+    session['discord_discriminator'] = user['discriminator']
+    return redirect(url_for('index'))
+
+
+@app.route('/login/')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 
 @app.route('/player_status/', methods=["GET"])
