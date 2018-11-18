@@ -11,8 +11,8 @@ Add to queue button = btn-addtoqueue
 */
 
 //Global Variables
-var songName;
-var interval_time = 500;
+const songName;
+const interval_time = 500;
 
 //Refresh data => Ajax async
 setInterval(function info() {
@@ -22,44 +22,35 @@ setInterval(function info() {
         dataType: "json",
         cache: false,
         success: function(jsonReturn) {
-            //fetchdata
-            var s_name = jsonReturn.now_playing.song;
-            var s_thumb = jsonReturn.now_playing.thumbnail;
-            var s_requester = jsonReturn.now_playing.requester;
-            //pushdata
-            $("#npName").text(s_name);
-            $("#npthumb").attr("src", s_thumb);
-            var reqq = "Requested By: " + s_requester;
-            $("#npreq").text(reqq);
+            $("#npName").text(jsonReturn.now_playing.song);
+            $("#npthumb").attr("src", jsonReturn.now_playing.thumbnai);
+            $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester;);
 
             //fetch progress
+            const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);
+            $("#npprogress").attr("style", "width:" + progresspc + "%";);
 
-            var s_duration = jsonReturn.now_playing.duration;
-            var s_progress = jsonReturn.now_playing.progress;
-            var progresspc = ((s_progress / s_duration) * 100);
-            var post = "width:" + progresspc + "%";
-            $("#npprogress").attr("style", post);
-
-            var ul = document.getElementById("queuecontent");
+            const ul = document.getElementById("queuecontent");
+            const items = ul.getElementsByTagName("li");
 
             if (items.length > jsonReturn.queue.length) {
-                for (var i = jsonReturn.queue.length; i < items.length; ++i) {
+                for (let i = jsonReturn.queue.length; i < items.length; ++i) {
                     ul.removeChild(items[i])
                 }
             }
 
-            var items = ul.getElementsByTagName("li");
-            for (var i = 0; i < items.length; ++i) {
-                var song_number = i + 1;
-                var new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
+
+            for (let i = 0; i < items.length; ++i) {
+                const song_number = i + 1;
+                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
                 if(items[i].innerHTML != new_innerHTML){
                     items[i].innerHTML = new_innerHTML;
                 }
             }
 
-            for (var i = items.length; i < jsonReturn.queue.length; i++) {
-                var li = document.createElement("li");
-                var song_number = i + 1;
+            for (let i = items.length; i < jsonReturn.queue.length; i++) {
+                const li = document.createElement("li");
+                const song_number = i + 1;
                 li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + ' <span class="badge badge-danger badge-pill">' + song_number + '</span></a>';
                 li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
                 ul.appendChild(li);
@@ -93,22 +84,22 @@ function keyWordsearch() {
 }
 
 function makeRequest() {
-    var q = $('#songname').val();
-    var request = gapi.client.youtube.search.list({
+    const q = $('#songname').val();
+    const request = gapi.client.youtube.search.list({
         q: q,
         part: 'snippet',
         maxResults: 1
     });
     request.execute(function(response) {
         $('#results').empty()
-        var srchItems = response.result.items;
+        const srchItems = response.result.items;
         $.each(srchItems, function(index, item) {
             vidTitle = item.snippet.title;
             vidId = item.id.videoId;
             vidurl = "https://www.youtube.com/watch?v=" + vidId;
             vidDescription = item.snippet.description;
             vidThumburl = item.snippet.thumbnails.medium.url;
-            var thumbUrl = vidThumburl;
+            const thumbUrl = vidThumburl;
             songName = vidTitle;
             $("#ytThumb").attr("src", thumbUrl);
             $("#ytName").text(songName);
