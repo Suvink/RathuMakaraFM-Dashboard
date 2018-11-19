@@ -261,9 +261,8 @@ def get_player_status():
             with open('/root/RathuMakaraFM-DiscordBot/status.json', "r") as f:
                 data = f.read()
                 if data:
+                    data = json.load(f)
                     break
-
-        data = json.load(data)
 
         return jsonify(data)
     except Exception as e:
