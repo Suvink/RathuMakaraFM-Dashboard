@@ -82,7 +82,7 @@ setInterval(function info() {
 
             for (let i = 0; i < items.length; ++i) {
                 const song_number = i + 1;
-                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<a href="/bot/song/move/'+song_number+'/"><span id="x" class="btn btn-default btn-sm"><i class="fas fa-angle-up"></i></span></a> <a href="/bot/song/move/top/"><span id="y" class="btn btn-light-blue btn-sm"><i class="fas fa-home"></i></span></a>';
+                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<a href="/bot/song/move/up/'+song_number+'/"><span id="x" class="btn btn-default  btn-xs"><i class="fas fa-angle-up"></i></span></a> <a href="/bot/song/move/top/'+song_number+'/"><span id="y" class="btn btn-light-blue btn-xs"><i class="fas fa-home"></i></span></a>';
                 if(items[i].innerHTML != new_innerHTML){
                     items[i].innerHTML = new_innerHTML;
                 }
@@ -91,7 +91,7 @@ setInterval(function info() {
             for (let i = items.length; i < jsonReturn.queue.length; i++) {
                 const li = document.createElement("li");
                 const song_number = i + 1;
-                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<a href="/bot/song/move/'+song_number+'/"><span id="x" class="btn btn-default btn-sm"><i class="fas fa-angle-up"></i></span></a> <a href="/bot/song/move/top/"><span id="y" class="btn btn-light-blue btn-sm"><i class="fas fa-home"></i></span></a>';
+                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<a href="/bot/song/move/up/'+song_number+'/"><span id="x" class="btn btn-default btn-xs"><i class="fas fa-angle-up"></i></span></a> <a href="/bot/song/move/top/'+song_number+'/"><span id="y" class="btn btn-light-blue btn-xs"><i class="fas fa-home"></i></span></a>';
                 li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
                 ul.appendChild(li);
             }

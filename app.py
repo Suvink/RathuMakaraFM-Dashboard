@@ -240,6 +240,46 @@ def bot_play_song():
         return redirect(url_for('index'))
 
 
+@app.route('/bot/song/move/up/<song_id>/')
+@login_required
+@dj_required
+def bot_move_song_up(song_id):
+    try:
+        r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+                                "user_id": session['discord_id'],
+                                "cmd": "move",
+                                "args": f"{song_id} {int(song_id)-1}"}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.error("Something went wrong change song queue position")
+        app.logger.exception(e)
+        flash("Something went wrong change song queue position")
+        return redirect(url_for('index'))
+
+
+@app.route('/bot/song/move/top/<song_id>/')
+@login_required
+@dj_required
+def bot_move_song_up(song_id):
+    try:
+        r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+                                "user_id": session['discord_id'],
+                                "cmd": "move",
+                                "args": f"{song_id}"}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.error("Something went wrong moving the song to the top of the queue")
+        app.logger.exception(e)
+        flash("Something went wrong moving the song to the top of the queue")
+        return redirect(url_for('index'))
+
+
 @app.route('/bot/clear/queue/')
 @login_required
 @dj_required
