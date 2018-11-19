@@ -109,9 +109,10 @@ setInterval(function info() {
 
 
 
+
             for (let i = 0; i < items.length; ++i) {
                 const song_number = i + 1;
-                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-home"></i></button></a></span>';
+                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '</a><span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-home"></i></button></a></span>';
                 if(items[i].innerHTML != new_innerHTML){
                     items[i].innerHTML = new_innerHTML;
                 }
@@ -120,7 +121,7 @@ setInterval(function info() {
             for (let i = items.length; i < jsonReturn.queue.length; i++) {
                 const li = document.createElement("li");
                 const song_number = i + 1;
-                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-home"></i></button></a></span>';
+                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '</a><span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-home"></i></button></a></span>';
                 li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
                 ul.appendChild(li);
             }
