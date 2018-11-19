@@ -9,6 +9,8 @@ Autoplay switch = btn-autoplay
 custom volume text area = setvol
 Add to queue button = btn-addtoqueue
 */
+const np_hr = 0;
+const tot_hr = 0;
 
 //Refresh data => Ajax async
 setInterval(function info() {
