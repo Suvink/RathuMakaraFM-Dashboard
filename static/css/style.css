@@ -47,3 +47,6 @@ body{
     line-height  : .5;
     border-radius : .2rem;
 }
+.customli{
+    overflow-y: hidden;
+}
