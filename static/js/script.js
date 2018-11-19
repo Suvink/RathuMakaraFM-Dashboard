@@ -67,13 +67,13 @@ setInterval(function info() {
 
                 //Post duration to html
                 if (np_durmin<60 && tot_durmin>60){
-                    $("#duration").html(np_durmin + ":" + np_dursec + "/" + tot_hr + ":" + tot_durmin + ":" + tot_dursec);
+                    $("#duration").html(("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + tot_hr + ":" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2));
                 }
                 else if (np_durmin<60 && tot_durmin<60){
-                    $("#duration").html(np_durmin + ":" + np_dursec + "/" + tot_durmin + ":" + tot_dursec)
+                    $("#duration").html(("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2))
                 }
                 else{
-                    $("#duration").html(np_hr + ":" + np_durmin + ":" + np_dursec + "/" + tot_hr + ":" + tot_durmin + ":" + tot_dursec);
+                    $("#duration").html(np_hr + ":" + ("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + tot_hr + ":" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2));
                 }
             }
 
