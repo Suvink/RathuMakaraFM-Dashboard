@@ -43,9 +43,9 @@
             </div>
 
             <div class="text-center">
-                <h2 class="text-white" id="npName">Rathu Makara FM Now Playing...</h2>
-                <h6  class="text-white" id="npreq">Requested by someone we have no idea of</h6>
-                <h6  class="text-white" id="duration">1:40:22/1:55:10</h6>
+                <h2 class="text-white" id="npName">Song Queue is Empty</h2>
+                <h6  class="text-white" id="npreq"></h6>
+                <h6  class="text-white" id="duration">00:00/00:00</h6>
             </div>
         
             <div class="progress">
@@ -158,6 +158,10 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            const default_thumb = "{{ url_for('static', filename='img/thumb.jpg') }}";
+        </script>
 
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

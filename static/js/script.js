@@ -20,16 +20,64 @@ setInterval(function info() {
         dataType: "json",
         cache: false,
         success: function(jsonReturn) {
-            if ($("#npName").text() !== jsonReturn.now_playing.song)
-                $("#npName").text(jsonReturn.now_playing.song);
+            if (jsonReturn.now_playing.song === null){
+                if ($("#npName").text() !== "Song Queue is Empty")
+                    $("#npName").text("Song Queue is Empty");
 
-            if ($("#npthumb").attr("src") !== jsonReturn.now_playing.thumbnail)
-                $("#npthumb").attr("src", jsonReturn.now_playing.thumbnail);
+                if ($("#npthumb").attr("src") !== default_thumb)
+                    $("#npthumb").attr("src", default_thumb);
 
-            if ($("#npreq").text() !== jsonReturn.now_playing.requester)
-                $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester);
+                if ($("#npreq").text() !== "")
+                    $("#npreq").text("");
 
-            if(jsonReturn.is_pause && $("#btn-pause").html() !== "Resume"){
+                $("#npprogress").attr("style", "width: 100%");
+                $("#duration").html("00:00/00:00")
+            }
+            else{
+                if ($("#npName").text() !== jsonReturn.now_playing.song)
+                    $("#npName").text(jsonReturn.now_playing.song);
+
+                if ($("#npthumb").attr("src") !== jsonReturn.now_playing.thumbnail)
+                    $("#npthumb").attr("src", jsonReturn.now_playing.thumbnail);
+
+                if ($("#npreq").text() !== jsonReturn.now_playing.requester)
+                    $("#npreq").text("Requested By: " + jsonReturn.now_playing.requester);
+
+                //fetch progress
+                const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);
+                $("#npprogress").attr("style", "width:" + progresspc + "%");
+
+                //Fetch duration
+
+                const tot_durmin = Math.floor(jsonReturn.now_playing.duration / 60);
+                const tot_dursec = jsonReturn.now_playing.duration % 60;
+
+                const np_durmin = Math.floor(jsonReturn.now_playing.progress / 60);
+                const np_dursec = jsonReturn.now_playing.progress % 60;
+
+                if (np_durmin>60){
+                    np_hr = Math.floor(np_durmin/60);
+                    np_durmin = np_durmin%60;
+                }
+
+                if (tot_durmin>60){
+                     tot_hr = Math.floor(tot_durmin/60);
+                     tot_durmin = tot_durmin%60;
+                }
+
+                //Post duration to html
+                if (np_durmin<60 && tot_durmin>60){
+                    $("#duration").html(np_durmin + ":" + np_dursec + "/" + tot_hr + ":" + tot_durmin + ":" + tot_dursec);
+                }
+                else if (np_durmin<60 && tot_durmin<60){
+                    $("#duration").html(np_durmin + ":" + np_dursec + "/" + tot_durmin + ":" + tot_dursec)
+                }
+                else{
+                    $("#duration").html(np_hr + ":" + np_durmin + ":" + np_dursec + "/" + tot_hr + ":" + tot_durmin + ":" + tot_dursec);
+                }
+            }
+
+            if (jsonReturn.is_pause && $("#btn-pause").html() !== "Resume"){
                 $("#btn-pause").html('Resume');
                 $('#btn-pause').attr('class', 'btn btn-warning btn-sm');
             }
@@ -39,40 +87,20 @@ setInterval(function info() {
                 $('#btn-pause').attr('class', 'btn btn-success btn-sm');
             }
 
-            if(jsonReturn.auto_play && $("#btn-pause").html() !== "Disable AutoPlay"){
+            if (jsonReturn.auto_play && $("#btn-pause").html() !== "Disable AutoPlay"){
                 $("#btn-autoplay").html('Disable AutoPlay');
                 $('#btn-autoplay').attr('class', 'btn btn-indigo btn-sm');
             }
+
             else if (!jsonReturn.auto_play && $("#btn-pause").html() !== "Enable AutoPlay"){
                 $("#btn-autoplay").html('Enable AutoPlay');
                 $('#btn-autoplay').attr('class', 'btn btn-unique btn-sm');
             }
 
-            //fetch progress
-            const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);
-            $("#npprogress").attr("style", "width:" + progresspc + "%");
 
-            //Fetch duration
             const ul = document.getElementById("queuecontent");
             const items = ul.getElementsByTagName("li");
 
-            const tot_durmin = Math.floor(jsonReturn.now_playing.duration / 60);
-            const tot_dursec = jsonReturn.now_playing.duration % 60;
-
-            const np_durmin = Math.floor(jsonReturn.now_playing.progress / 60);
-            const np_dursec = jsonReturn.now_playing.progress % 60;
-
-            if (np_durmin>60){
-                np_hr = Math.floor(np_durmin/60);
-                np_durmin = np_durmin%60;
-            }
-             if (tot_durmin>60){
-                 tot_hr = Math.floor(tot_durmin/60);
-                 tot_durmin = tot_durmin%60;
-             }
-             //Post duration to html
-             $("#duration").html(np_hr + ":" + np_durmin + ":" + np_dursec + "/" + tot_hr + ":" + tot_durmin + ":" + tot_dursec);
-          
             if (items.length > jsonReturn.queue.length) {
                 for (let i = jsonReturn.queue.length; i < items.length; ++i) {
                     ul.removeChild(items[i])
@@ -80,9 +108,10 @@ setInterval(function info() {
             }
 
 
+
             for (let i = 0; i < items.length; ++i) {
                 const song_number = i + 1;
-                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<a href="/bot/song/move/up/'+song_number+'/"><span id="x" class="btn btn-default  btn-xs"><i class="fas fa-angle-up"></i></span></a> <a href="/bot/song/move/top/'+song_number+'/"><span id="y" class="btn btn-light-blue btn-xs"><i class="fas fa-home"></i></span></a>';
+                const new_innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-home"></i></button></a></span>';
                 if(items[i].innerHTML != new_innerHTML){
                     items[i].innerHTML = new_innerHTML;
                 }
@@ -91,7 +120,7 @@ setInterval(function info() {
             for (let i = items.length; i < jsonReturn.queue.length; i++) {
                 const li = document.createElement("li");
                 const song_number = i + 1;
-                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<a href="/bot/song/move/up/'+song_number+'/"><span id="x" class="btn btn-default btn-xs"><i class="fas fa-angle-up"></i></span></a> <a href="/bot/song/move/top/'+song_number+'/"><span id="y" class="btn btn-light-blue btn-xs"><i class="fas fa-home"></i></span></a>';
+                li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '<span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-home"></i></button></a></span>';
                 li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
                 ul.appendChild(li);
             }
