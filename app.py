@@ -232,6 +232,8 @@ def bot_request_song():
             flash(r['error'])
         return redirect(url_for('index'))
     except Exception as e:
+        if request.form:
+            app.logger.info(str(request.form))
         app.logger.error("Something went wrong while requesting the song")
         app.logger.exception(e)
         flash("Something went wrong while requesting the song")
