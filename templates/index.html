@@ -125,7 +125,7 @@
         <!-- Modal -->
         <div class="modal fade" id="addsong" tabindex="-1" role="dialog" aria-labelledby="addsongModel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content modal-lg">
                     <div class="modal-header">
                         <h5 class="modal-title" >Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -147,11 +147,6 @@
                                 <h4 class="card-title" id="ytName"><a>Rathu Makara FM song request</a></h4>
                                 <!-- Description -->
                                 <p class="card-text" id = "ytDes">Video Description loading....</p>
-                                <!-- Button -->
-                                <form action="{{ url_for('bot_play_song') }}" method="post">
-                                    <input type="hidden" id="yt_song_url" name="yt_song_url" value="">
-                                    <input type="submit" value="Add to Queue" class="btn btn-primary btn-sm" data-dismiss="modal">
-                                </form>
                                 </div>
                         </div>
                     </div>
@@ -159,7 +154,7 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <form action="{{ url_for('bot_play_song') }}" method="post">
                             <input type="hidden" id="yt_song_url" name="yt_song_url" value="">
-                            <input type="submit" value="Add to Queue" class="btn btn-primary btn-sm" data-dismiss="modal">
+                            <input type="submit" value="Add to Queue" class="btn btn-primary">
                         </form>
                     </div>
                 </div>
