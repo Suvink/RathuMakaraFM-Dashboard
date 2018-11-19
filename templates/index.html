@@ -154,9 +154,9 @@
                                 <!-- Description -->
                                 <p class="card-text" id = "ytDes">Video Description loading....</p>
                                 <!-- Button -->
-                                <form action="{{ url_for('bot_request_song') }}" method="post">
+                                <form action="{{ url_for('bot_play_song') }}" method="post">
                                     <input type="hidden" id="yt_song_url" name="yt_song_url" value="">
-                                    <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal">Add to Queue</button>
+                                    <input type="submit" class="btn btn-primary btn-sm" data-dismiss="modal">Add to Queue</input>
                                 </form>
                                 </div>
                         </div>

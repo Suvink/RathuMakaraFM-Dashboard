@@ -218,10 +218,10 @@ def bot_set_volume():
         return redirect(url_for('index'))
 
 
-@app.route('/bot/request/song/', methods=["POST"])
+@app.route('/bot/song/play/', methods=["POST"])
 @login_required
 @dj_required
-def bot_request_song():
+def bot_play_song():
     try:
         r = requests.post('http://178.128.222.109:5000/API/bot/request/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
