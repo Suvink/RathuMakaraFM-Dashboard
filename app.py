@@ -258,13 +258,12 @@ def bot_clear_queue():
 def get_player_status():
     try:
         while True:
-            with open('/root/RathuMakaraFM-DiscordBot/status.json', "r") as f:
-                data = f.read()
-                if data:
-                    data = json.load(f)
-                    break
+            if os.stat("/root/RathuMakaraFM-DiscordBot/status.json").st_size != 0:
+                break
 
-        return jsonify(data)
+        with open('/root/RathuMakaraFM-DiscordBot/status.json', "r") as f:
+            return jsonify(json.load(f))
+
     except Exception as e:
         app.logger.error("Reading status.json")
         app.logger.exception(e)
