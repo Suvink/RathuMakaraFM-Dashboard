@@ -23,7 +23,8 @@ body{
 
 }
 #queue{
-    margin-block-start: 10px
+    margin-block-start: 10px;
+    overflow: hidden;
 }
 #controls{
     margin-block-start: 30px
