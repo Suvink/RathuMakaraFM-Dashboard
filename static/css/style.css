@@ -16,6 +16,7 @@ body{
 #queuecontent{
     max-height: 300px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 .np{
     font-style: italic;
