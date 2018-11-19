@@ -263,7 +263,7 @@ def bot_move_song_up(song_id):
 @app.route('/bot/song/move/top/<song_id>/')
 @login_required
 @dj_required
-def bot_move_song_up(song_id):
+def bot_move_song_top(song_id):
     try:
         r = requests.post('http://178.128.222.109:5000/API/bot/request/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
