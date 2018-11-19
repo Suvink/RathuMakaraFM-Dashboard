@@ -122,7 +122,7 @@ setInterval(function info() {
                 const li = document.createElement("li");
                 const song_number = i + 1;
                 li.innerHTML = '<a href="'+jsonReturn.queue[i].url+'">'+ jsonReturn.queue[i].song + '</a><span><a href="/bot/song/move/up/'+song_number+'/"><button class="btn btn-default btn-xs text-right disabled"><i class="fas fa-angle-up"></i></button></a><a href="/bot/song/move/top/'+song_number+'/"><button class="btn btn-light-blue btn-xs text-right"><i class="fas fa-angle-double-up"></i></button></a></span>';
-                li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
+                li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center customli");
                 ul.appendChild(li);
             }
 
