@@ -50,9 +50,7 @@ setInterval(function info() {
             const progresspc = ((jsonReturn.now_playing.progress / jsonReturn.now_playing.duration) * 100);
             $("#npprogress").attr("style", "width:" + progresspc + "%");
 
-            const ul = document.getElementById("queuecontent");
-            const items = ul.getElementsByTagName("li");
-            
+            //Fetch duration
             const ul = document.getElementById("queuecontent");
             const items = ul.getElementsByTagName("li");
 
@@ -63,14 +61,16 @@ setInterval(function info() {
             const np_dursec = jsonReturn.now_playing.progress % 60;
 
             if (np_durmin>60){
-                const np_hr = Math.floor(np_durmin/60);
+                np_hr = Math.floor(np_durmin/60);
                 np_durmin = np_durmin%60;
             }
-             if (tot_durmin){
-                 const tot_hr = Math.floor(tot_durmin/60);
+             if (tot_durmin>60){
+                 tot_hr = Math.floor(tot_durmin/60);
                  tot_durmin = tot_durmin%60;
              }
-
+             //Post duration to html
+             $("#duration").html(np_hr + ":" + np_durmin + ":" + np_dursec + "/" + tot_hr + ":" + tot_durmin + ":" + tot_dursec);
+          
             if (items.length > jsonReturn.queue.length) {
                 for (let i = jsonReturn.queue.length; i < items.length; ++i) {
                     ul.removeChild(items[i])
