@@ -48,5 +48,5 @@ body{
     border-radius : .2rem;
 }
 .customli{
-    overflow-y: hidden;
+    overflow-y: auto;
 }
