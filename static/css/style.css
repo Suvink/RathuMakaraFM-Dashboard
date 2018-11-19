@@ -49,4 +49,5 @@ body{
 }
 .customli{
     overflow-y: auto;
+     display:inline-block;
 }
