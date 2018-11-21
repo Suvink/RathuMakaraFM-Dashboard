@@ -49,10 +49,10 @@ setInterval(function info() {
 
                 //Fetch duration
 
-                const tot_durmin = Math.floor(jsonReturn.now_playing.duration / 60);
+                let tot_durmin = Math.floor(jsonReturn.now_playing.duration / 60);
                 const tot_dursec = jsonReturn.now_playing.duration % 60;
 
-                const np_durmin = Math.floor(jsonReturn.now_playing.progress / 60);
+                let np_durmin = Math.floor(jsonReturn.now_playing.progress / 60);
                 const np_dursec = jsonReturn.now_playing.progress % 60;
 
                 if (np_durmin>60){
