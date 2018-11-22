@@ -9,8 +9,6 @@ Autoplay switch = btn-autoplay
 custom volume text area = setvol
 Add to queue button = btn-addtoqueue
 */
-let np_hr = 0;
-let tot_hr = 0;
 
 //Refresh data => Ajax async
 setInterval(function info() {
@@ -55,21 +53,23 @@ setInterval(function info() {
                 let np_durmin = Math.floor(jsonReturn.now_playing.progress / 60);
                 const np_dursec = jsonReturn.now_playing.progress % 60;
 
+                let np_hr = false;
+                let tot_hr = false;
+
                 if (np_durmin>60){
-                    np_hr = Math.floor(np_durmin/60);
+                    let np_hr = Math.floor(np_durmin/60);
                     np_durmin = np_durmin%60;
                 }
 
                 if (tot_durmin>60){
-                     tot_hr = Math.floor(tot_durmin/60);
+                     let tot_hr = Math.floor(tot_durmin/60);
                      tot_durmin = tot_durmin%60;
                 }
-
                 //Post duration to html
-                if (np_durmin<60 && tot_durmin>60){
+                if (!np_hr && tot_hr ){
                     $("#duration").html(("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + tot_hr + ":" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2));
                 }
-                else if (np_durmin<60 && tot_durmin<60){
+                else if (!np_hr && !tot_hr){
                     $("#duration").html(("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2))
                 }
                 else{
