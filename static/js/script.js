@@ -65,12 +65,11 @@ setInterval(function info() {
                      let tot_hr = Math.floor(tot_durmin/60);
                      tot_durmin = tot_durmin%60;
                 }
-                console.log(np_hr, np_hr);
                 //Post duration to html
-                if (np_hr < 0 && tot_hr > 0 ){
+                if (np_hr === 0 && tot_hr > 0 ){
                     $("#duration").html(("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + tot_hr + ":" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2));
                 }
-                else if (np_hr < 0 && tot_hr < 0){
+                else if (np_hr === 0 && tot_hr === 0){
                     $("#duration").html(("0" + np_durmin).slice(-2) + ":" + ("0" + np_dursec).slice(-2) + "/" + ("0" + tot_durmin).slice(-2) + ":" + ("0" + tot_dursec).slice(-2));
                 }
                 else{
