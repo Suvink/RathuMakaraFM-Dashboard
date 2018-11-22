@@ -57,12 +57,12 @@ setInterval(function info() {
                 let tot_hr = 0;
 
                 if (np_durmin>60){
-                    let np_hr = Math.floor(np_durmin/60);
+                    np_hr = Math.floor(np_durmin/60);
                     np_durmin = np_durmin%60;
                 }
 
                 if (tot_durmin>60){
-                     let tot_hr = Math.floor(tot_durmin/60);
+                     tot_hr = Math.floor(tot_durmin/60);
                      tot_durmin = tot_durmin%60;
                 }
                 //Post duration to html
