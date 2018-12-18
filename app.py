@@ -54,7 +54,7 @@ def login_required(f):
 def dj_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        r = requests.post('http://178.128.222.109:5000/API/bot/get/user/',
+        r = requests.post('http://127.0.0.1:5000/API/bot/get/user/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id']}).json()
         try:
@@ -130,7 +130,7 @@ def bot_toggle_play():
     if bot_status['is_pause']:
         j['cmd'] = "resume"
 
-    r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                       json=j).json()
 
     if 'error' in r:
@@ -142,7 +142,7 @@ def bot_toggle_play():
 @login_required
 @dj_required
 def bot_skip():
-    r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "skip",
@@ -156,7 +156,7 @@ def bot_skip():
 @login_required
 @dj_required
 def bot_volume_high():
-    r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "volume",
@@ -170,7 +170,7 @@ def bot_volume_high():
 @login_required
 @dj_required
 def bot_volume_low():
-    r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "volume",
@@ -188,7 +188,7 @@ def bot_toggle_autoplay():
     arg = "on"
     if bot_status['auto_play']:
         arg = "off"
-    r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "autoplay",
@@ -203,7 +203,7 @@ def bot_toggle_autoplay():
 @dj_required
 def bot_set_volume():
     try:
-        r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
@@ -223,7 +223,7 @@ def bot_set_volume():
 @dj_required
 def bot_play_song():
     try:
-        r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id'],
                                 "cmd": "play",
@@ -245,7 +245,7 @@ def bot_play_song():
 @dj_required
 def bot_move_song_up(song_id):
     try:
-        r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
@@ -265,7 +265,7 @@ def bot_move_song_up(song_id):
 @dj_required
 def bot_move_song_top(song_id):
     try:
-        r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                           json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
@@ -284,7 +284,7 @@ def bot_move_song_top(song_id):
 @login_required
 @dj_required
 def bot_clear_queue():
-    r = requests.post('http://178.128.222.109:5000/API/bot/request/',
+    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
                       json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
                             "user_id": session['discord_id'],
                             "cmd": "clearQueue",
