@@ -11,10 +11,9 @@ jobs:
     steps:
       - name: Install kubectl and doctl
         run: |
-          sudo snap install kubectl --classic
-          sudo snap install doctl
-          sudo snap connect doctl:kube-config
-          sudo chown -R $USER:$USER ~/snap
+          snap install kubectl --classic
+          snap install doctl
+          snap connect doctl:kube-config
       - name: Configure kubectl and doctl
         run: |
           doctl k8s cluster kubeconfig save ${{secrets.DIGITALOCEAN_CLUSTER}} -t ${{secrets.DIGITALOCEAN_TOKEN}}
