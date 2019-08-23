@@ -6,7 +6,7 @@ on:
     - master
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -27,10 +27,6 @@ jobs:
           docker tag ${IMAGE_NAME} ${IMAGE_NAME}:production
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Push to Docker registry
         run: docker push ${IMAGE_NAME}
         env:
