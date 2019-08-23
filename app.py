@@ -298,7 +298,7 @@ def get_player_status():
     try:
         bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
         if bot_status.status_code == 200 and "now_playing" in bot_status.json():
-            return bot_status.json()
+            return jsonify(bot_status.json())
 
     except Exception as e:
         app.logger.error("Bot API didn't returned error")
