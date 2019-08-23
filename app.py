@@ -25,7 +25,7 @@ OAUTH2_CLIENT_ID = os.getenv("OAUTH2_CLIENT_ID")
 OAUTH2_CLIENT_SECRET = os.getenv("OAUTH2_CLIENT_SECRET")
 OAUTH2_REDIRECT_URI = os.getenv("OAUTH2_REDIRECT_URI")
 
-API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
+API_BASE_URL = os.environ.get('API_BASE_URL')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
@@ -70,10 +70,10 @@ def login_required(f):
 def dj_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/get/user/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id']}).json()
         try:
-            r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/get/user/',
-                              json={"authkey": os.getenv("WEB_AUTH_KEY"),
-                                    "user_id": session['discord_id']}).json()
             if int(os.getenv("BOT_COMMANDER_ROLE_ID")) in r['roles']:
                 return f(*args, **kwargs)
             else:
@@ -112,6 +112,7 @@ def callback():
     if request.values.get('error'):
         return request.values['error']
     discord = make_session(state=session.get('oauth2_state'))
+    app.logger.debug(f"authorization_response : {request.url}")
     token = discord.fetch_token(
         TOKEN_URL,
         client_secret=OAUTH2_CLIENT_SECRET,
