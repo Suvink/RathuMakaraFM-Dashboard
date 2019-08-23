@@ -112,6 +112,7 @@ def callback():
     if request.values.get('error'):
         return request.values['error']
     discord = make_session(state=session.get('oauth2_state'))
+    app.logger.debug(f"callback request.url - {request.url}")
     token = discord.fetch_token(
         TOKEN_URL,
         client_secret=OAUTH2_CLIENT_SECRET,
