@@ -13,7 +13,7 @@ jobs:
         run: |
           curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
           chmod +x ./kubectl
-          curl -sL https://github.com/digitalocean/doctl/releases/download/v<version>/doctl-1.28.0-linux-amd64.tar.gz | tar -xzv
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.28.0/doctl-1.28.0-linux-amd64.tar.gz | tar -xzv
       - name: Configure kubectl and doctl
         run: |
           ./doctl k8s cluster kubeconfig save ${{secrets.DIGITALOCEAN_CLUSTER}} -t ${{secrets.DIGITALOCEAN_TOKEN}}
