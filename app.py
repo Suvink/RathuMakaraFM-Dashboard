@@ -297,6 +297,7 @@ def bot_clear_queue():
 def get_player_status():
     try:
         bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
+        app.logger.info(f"bot_status - {bot_status.json()}")
         if bot_status.status_code == 200 and "now_playing" in bot_status.json():
             return jsonify(bot_status.json())
 
@@ -319,4 +320,7 @@ def get_player_status():
 
 
 if __name__ == '__main__':
+    import logging
+    logging.basicConfig(filename='dashboard.log', level=logging.DEBUG)
+    app.logger.debug("Starting Rathumakara Dashboard")
     app.run(host="0.0.0.0")
