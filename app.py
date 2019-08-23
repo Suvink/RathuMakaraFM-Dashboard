@@ -5,9 +5,9 @@ from requests_oauthlib import OAuth2Session
 from functools import wraps
 import requests
 
-OAUTH2_CLIENT_ID = "498036184501714944"
-OAUTH2_CLIENT_SECRET = "q8nOQLkd-jdKJUVC2jonYLitYsDOADiL"
-OAUTH2_REDIRECT_URI = 'https://rathumakara.iconicto.com/callback/'
+OAUTH2_CLIENT_ID = os.getenv("OAUTH2_CLIENT_ID")
+OAUTH2_CLIENT_SECRET = os.getenv("OAUTH2_CLIENT_SECRET")
+OAUTH2_REDIRECT_URI = os.getenv("OAUTH2_REDIRECT_URI")
 
 API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
@@ -54,11 +54,11 @@ def login_required(f):
 def dj_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        r = requests.post('http://127.0.0.1:5000/API/bot/get/user/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/get/user/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id']}).json()
         try:
-            if 485449088360382465 in r['roles']:
+            if int(os.getenv("BOT_COMMANDER_ROLE_ID")) in r['roles']:
                 return f(*args, **kwargs)
             else:
                 flash("You need to be a DJ to perform this action")
@@ -121,8 +121,8 @@ def logout():
 @login_required
 @dj_required
 def bot_toggle_play():
-    bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
-    j = {"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
+    j = {"authkey": os.getenv("WEB_AUTH_KEY"),
          "user_id": session['discord_id'],
          "cmd": "pause",
          "args": ""}
@@ -130,7 +130,7 @@ def bot_toggle_play():
     if bot_status['is_pause']:
         j['cmd'] = "resume"
 
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
+    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
                       json=j).json()
 
     if 'error' in r:
@@ -142,8 +142,8 @@ def bot_toggle_play():
 @login_required
 @dj_required
 def bot_skip():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "skip",
                             "args": ""}).json()
@@ -156,8 +156,8 @@ def bot_skip():
 @login_required
 @dj_required
 def bot_volume_high():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "volume",
                             "args": "100"}).json()
@@ -170,8 +170,8 @@ def bot_volume_high():
 @login_required
 @dj_required
 def bot_volume_low():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "volume",
                             "args": "5"}).json()
@@ -184,12 +184,12 @@ def bot_volume_low():
 @login_required
 @dj_required
 def bot_toggle_autoplay():
-    bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
+    bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
     arg = "on"
     if bot_status['auto_play']:
         arg = "off"
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "autoplay",
                             "args": arg}).json()
@@ -203,8 +203,8 @@ def bot_toggle_autoplay():
 @dj_required
 def bot_set_volume():
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
                                 "args": str(request.form['volume_level'])}).json()
@@ -223,8 +223,8 @@ def bot_set_volume():
 @dj_required
 def bot_play_song():
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "play",
                                 "args": request.form['yt_song_url']}).json()
@@ -245,8 +245,8 @@ def bot_play_song():
 @dj_required
 def bot_move_song_up(song_id):
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
                                 "args": f"{song_id} {int(song_id)-1}"}).json()
@@ -265,8 +265,8 @@ def bot_move_song_up(song_id):
 @dj_required
 def bot_move_song_top(song_id):
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
                                 "args": f"{song_id}"}).json()
@@ -284,8 +284,8 @@ def bot_move_song_top(song_id):
 @login_required
 @dj_required
 def bot_clear_queue():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "clearQueue",
                             "args": ""}).json()
@@ -297,28 +297,26 @@ def bot_clear_queue():
 @app.route('/player_status/', methods=["GET"])
 def get_player_status():
     try:
-        while True:
-            if os.stat("/root/RathuMakaraFM-DiscordBot/status.json").st_size != 0:
-                break
-
-        with open('/root/RathuMakaraFM-DiscordBot/status.json', "r") as f:
-            return jsonify(json.load(f))
+        bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
+        if bot_status.status_code == 200 and "now_playing" in bot_status.json():
+            return requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
+        else:
+            return jsonify(
+                {
+                    "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
+                                    "duration": None, "progress": None, "extractor": None, "requester": None,
+                                    "is_pause": False},
+                    'queue': [],
+                    "is_pause": False,
+                    "auto_play": False,
+                    "volume": 100
+                }
+            )
 
     except Exception as e:
-        app.logger.error("Reading status.json")
+        app.logger.error("Bot API didn't returned error")
         app.logger.exception(e)
-        return jsonify(
-            {
-                "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
-                                "duration": None, "progress": None, "extractor": None, "requester": None,
-                                "is_pause": False},
-                'queue': [],
-                "is_pause": False,
-                "auto_play": False,
-                "volume": 100
-            }
-        )
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")
