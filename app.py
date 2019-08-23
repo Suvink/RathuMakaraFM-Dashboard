@@ -338,16 +338,11 @@ def bot_clear_queue():
 @app.route('/player_status/', methods=["GET"])
 def get_player_status():
     try:
-        bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
-        app.logger.info(f"bot_status - {bot_status.json()}, status code {bot_status}")
-        if bot_status.status_code == 200 and "now_playing" in bot_status.json():
-            return jsonify(bot_status.json())
+        return jsonify(requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json())
 
     except Exception as e:
         app.logger.error("Bot API didn't returned error")
         app.logger.exception(e)
-
-    finally:
         return jsonify(
             {
                 "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
