@@ -299,7 +299,7 @@ def get_player_status():
     try:
         bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
         if bot_status.status_code == 200 and "now_playing" in bot_status.json():
-            return requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
+            return bot_status
         else:
             return jsonify(
                 {
