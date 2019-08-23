@@ -112,12 +112,10 @@ def callback():
     if request.values.get('error'):
         return request.values['error']
     discord = make_session(state=session.get('oauth2_state'))
-    request_url = request.url.replace("http://", "https://")
-    app.logger.debug(f"callback request.url - {request_url}")
     token = discord.fetch_token(
         TOKEN_URL,
         client_secret=OAUTH2_CLIENT_SECRET,
-        authorization_response=request_url)
+        authorization_response=request.url)
     session['oauth2_token'] = token
     session['logged_in'] = True
     discord = make_session(token=session.get('oauth2_token'))
