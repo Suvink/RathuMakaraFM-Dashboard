@@ -339,11 +339,9 @@ def bot_clear_queue():
 def get_player_status():
     try:
         bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
-        app.logger.info(f"bot_status - {bot_status.json()}")
+        # app.logger.info(f"bot_status - {bot_status.json()}")
         if bot_status.status_code == 200 and "now_playing" in bot_status.json():
-            return jsonify(bot_status.json().dumps())
-        else:
-            return jsonify({"error": "sdsfsf"})
+            return jsonify(bot_status.json())
 
     except Exception as e:
         app.logger.error("Bot API didn't returned error")
