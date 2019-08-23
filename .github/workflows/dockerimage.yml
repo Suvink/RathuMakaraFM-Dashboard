@@ -11,20 +11,20 @@ jobs:
     steps:
       - name: Install kubectl and doctl
         run: |
-          sudo chown -R $USER:$USER ~/snap
           sudo snap install kubectl --classic
           sudo snap install doctl
           sudo snap connect doctl:kube-config
+          sudo chown -R $USER:$USER ~/snap
       - name: Configure kubectl and doctl
         run: |
-          sudo doctl k8s cluster kubeconfig save ${{secrets.DIGITALOCEAN_CLUSTER}} -t ${{secrets.DIGITALOCEAN_TOKEN}}
-          sudo doctl auth init -t ${{secrets.DIGITALOCEAN_TOKEN}}
-          echo ${{secrets.DOCKER_PASSWORD}} | sudo docker login registry.iconicto.com -u ${{secrets.DOCKER_USERNAME}} --password-stdin
+          doctl k8s cluster kubeconfig save ${{secrets.DIGITALOCEAN_CLUSTER}} -t ${{secrets.DIGITALOCEAN_TOKEN}}
+          doctl auth init -t ${{secrets.DIGITALOCEAN_TOKEN}}
+          echo ${{secrets.DOCKER_PASSWORD}} | docker login registry.iconicto.com -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - name: Build Image
         run: |
-          sudo docker build -f Deployment/Production/Dockerfile -t $IMAGE_NAME .
-          sudo docker tag ${IMAGE_NAME} ${IMAGE_NAME}:commit-${GITHUB_SHA}
-          sudo docker tag ${IMAGE_NAME} ${IMAGE_NAME}:production
+          docker build -f Deployment/Production/Dockerfile -t $IMAGE_NAME .
+          docker tag ${IMAGE_NAME} ${IMAGE_NAME}:commit-${GITHUB_SHA}
+          docker tag ${IMAGE_NAME} ${IMAGE_NAME}:production
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
   deploy:
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Push to Docker registry
-        run: sudo docker push ${IMAGE_NAME}
+        run: docker push ${IMAGE_NAME}
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
       - name: Deploy to Cluster
