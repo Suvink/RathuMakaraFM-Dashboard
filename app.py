@@ -53,10 +53,10 @@ def login_required(f):
 def dj_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/get/user/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
-                                "user_id": session['discord_id']}).json()
         try:
+            r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/get/user/',
+                              json={"authkey": os.getenv("WEB_AUTH_KEY"),
+                                    "user_id": session['discord_id']}).json()
             if int(os.getenv("BOT_COMMANDER_ROLE_ID")) in r['roles']:
                 return f(*args, **kwargs)
             else:
@@ -120,81 +120,106 @@ def logout():
 @login_required
 @dj_required
 def bot_toggle_play():
-    bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
-    j = {"authkey": os.getenv("WEB_AUTH_KEY"),
-         "user_id": session['discord_id'],
-         "cmd": "pause",
-         "args": ""}
+    try:
+        bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
+        j = {"authkey": os.getenv("WEB_AUTH_KEY"),
+             "user_id": session['discord_id'],
+             "cmd": "pause",
+             "args": ""}
 
-    if bot_status['is_pause']:
-        j['cmd'] = "resume"
+        if bot_status['is_pause']:
+            j['cmd'] = "resume"
 
-    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                      json=j).json()
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json=j).json()
 
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/skip/')
 @login_required
 @dj_required
 def bot_skip():
-    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
-                            "user_id": session['discord_id'],
-                            "cmd": "skip",
-                            "args": ""}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "skip",
+                                "args": ""}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/volume/high/')
 @login_required
 @dj_required
 def bot_volume_high():
-    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
-                            "user_id": session['discord_id'],
-                            "cmd": "volume",
-                            "args": "100"}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "volume",
+                                "args": "100"}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/volume/low/')
 @login_required
 @dj_required
 def bot_volume_low():
-    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
-                            "user_id": session['discord_id'],
-                            "cmd": "volume",
-                            "args": "5"}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "volume",
+                                "args": "5"}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/toggle/autoplay')
 @login_required
 @dj_required
 def bot_toggle_autoplay():
-    bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
-    arg = "on"
-    if bot_status['auto_play']:
-        arg = "off"
-    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
-                            "user_id": session['discord_id'],
-                            "cmd": "autoplay",
-                            "args": arg}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
+        arg = "on"
+        if bot_status['auto_play']:
+            arg = "off"
+        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "autoplay",
+                                "args": arg}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/volume/set/', methods=["POST"])
@@ -248,7 +273,7 @@ def bot_move_song_up(song_id):
                           json={"authkey": os.getenv("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
-                                "args": f"{song_id} {int(song_id)-1}"}).json()
+                                "args": f"{song_id} {int(song_id) - 1}"}).json()
         if 'error' in r:
             flash(r['error'])
         return redirect(url_for('index'))
@@ -299,7 +324,9 @@ def get_player_status():
         bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
         app.logger.info(f"bot_status - {bot_status.json()}")
         if bot_status.status_code == 200 and "now_playing" in bot_status.json():
-            return jsonify(bot_status.json())
+            return jsonify(bot_status.json().dumps())
+        else:
+            return jsonify({"error": "sdsfsf"})
 
     except Exception as e:
         app.logger.error("Bot API didn't returned error")
@@ -320,7 +347,5 @@ def get_player_status():
 
 
 if __name__ == '__main__':
-    import logging
-    logging.basicConfig(filename='dashboard.log', level=logging.DEBUG)
     app.logger.debug("Starting Rathumakara Dashboard")
     app.run(host="0.0.0.0")
