@@ -21,7 +21,7 @@ jobs:
           echo ${{secrets.DOCKER_PASSWORD}} | docker login registry.iconicto.com -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - name: Build Image
         run: |
-          docker build -f Deployment/Production/Dockerfile -t $IMAGE_NAME .
+          docker build -f ../../Deployment/Production/Dockerfile -t $IMAGE_NAME .
           docker tag ${IMAGE_NAME} ${IMAGE_NAME}:commit-${GITHUB_SHA}
           docker tag ${IMAGE_NAME} ${IMAGE_NAME}:production
         env:
