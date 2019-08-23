@@ -1,4 +1,3 @@
-import json
 import os
 from flask import Flask, session, redirect, request, url_for, jsonify, render_template, flash
 from requests_oauthlib import OAuth2Session
@@ -299,23 +298,24 @@ def get_player_status():
     try:
         bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/")
         if bot_status.status_code == 200 and "now_playing" in bot_status.json():
-            return bot_status
-        else:
-            return jsonify(
-                {
-                    "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
-                                    "duration": None, "progress": None, "extractor": None, "requester": None,
-                                    "is_pause": False},
-                    'queue': [],
-                    "is_pause": False,
-                    "auto_play": False,
-                    "volume": 100
-                }
-            )
+            return bot_status.json()
 
     except Exception as e:
         app.logger.error("Bot API didn't returned error")
         app.logger.exception(e)
+
+    finally:
+        return jsonify(
+            {
+                "now_playing": {"song": None, "uploader": None, "thumbnail": None, "url": None,
+                                "duration": None, "progress": None, "extractor": None, "requester": None,
+                                "is_pause": False},
+                'queue': [],
+                "is_pause": False,
+                "auto_play": False,
+                "volume": 100
+            }
+        )
 
 
 if __name__ == '__main__':
