@@ -22,7 +22,7 @@ jobs:
       - name: Build Image
         run: |
           docker build -f Deployment/Production/Dockerfile -t $IMAGE_NAME .
-          docker tag ${IMAGE_NAME} ${IMAGE_NAME}:commit-${{GITHUB_SHA}}
+          docker tag ${IMAGE_NAME} ${IMAGE_NAME}:commit-${GITHUB_SHA}
           docker tag ${IMAGE_NAME} ${IMAGE_NAME}:production
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
@@ -35,6 +35,6 @@ jobs:
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
       - name: Deploy to Cluster
-        run: kubectl set image deployment rathumakara-dashboard-deployment rathumakara-dashboard=${IMAGE_NAME}:commit-${{GITHUB_SHA}}
+        run: kubectl set image deployment rathumakara-dashboard-deployment rathumakara-dashboard=${IMAGE_NAME}:commit-${GITHUB_SHA}
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
