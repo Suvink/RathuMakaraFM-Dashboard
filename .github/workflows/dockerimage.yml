@@ -11,13 +11,13 @@ jobs:
     steps:
       - name: Install kubectl and doctl
         run: |
-          snap install kubectl --classic
-          snap install doctl
-          snap connect doctl:kube-config
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v<version>/doctl-1.28.0-linux-amd64.tar.gz | tar -xzv
       - name: Configure kubectl and doctl
         run: |
-          doctl k8s cluster kubeconfig save ${{secrets.DIGITALOCEAN_CLUSTER}} -t ${{secrets.DIGITALOCEAN_TOKEN}}
-          doctl auth init -t ${{secrets.DIGITALOCEAN_TOKEN}}
+          ./doctl k8s cluster kubeconfig save ${{secrets.DIGITALOCEAN_CLUSTER}} -t ${{secrets.DIGITALOCEAN_TOKEN}}
+          ./doctl auth init -t ${{secrets.DIGITALOCEAN_TOKEN}}
           echo ${{secrets.DOCKER_PASSWORD}} | docker login registry.iconicto.com -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - name: Build Image
         run: |
@@ -35,6 +35,6 @@ jobs:
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
       - name: Deploy to Cluster
-        run: kubectl set image deployment rathumakara-dashboard-deployment rathumakara-dashboard=${IMAGE_NAME}:commit-${GITHUB_SHA}
+        run: ./kubectl set image deployment rathumakara-dashboard-deployment rathumakara-dashboard=${IMAGE_NAME}:commit-${GITHUB_SHA}
         env:
           IMAGE_NAME: registry.iconicto.com/rathumakara-dashboard
