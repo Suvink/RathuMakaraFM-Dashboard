@@ -21,6 +21,11 @@ dictConfig({
     }
 })
 
+
+def get_env(env):
+    return env.strip()
+
+
 OAUTH2_CLIENT_ID = get_env("OAUTH2_CLIENT_ID")
 OAUTH2_CLIENT_SECRET = get_env("OAUTH2_CLIENT_SECRET")
 OAUTH2_REDIRECT_URI = get_env("OAUTH2_REDIRECT_URI")
@@ -31,10 +36,6 @@ TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
-
-
-def get_env(env):
-    return env.strip()
 
 
 def token_updater(token):
