@@ -21,16 +21,20 @@ dictConfig({
     }
 })
 
-OAUTH2_CLIENT_ID = os.getenv("OAUTH2_CLIENT_ID").strip()
-OAUTH2_CLIENT_SECRET = os.getenv("OAUTH2_CLIENT_SECRET").strip()
-OAUTH2_REDIRECT_URI = os.getenv("OAUTH2_REDIRECT_URI").strip()
+OAUTH2_CLIENT_ID = get_env("OAUTH2_CLIENT_ID")
+OAUTH2_CLIENT_SECRET = get_env("OAUTH2_CLIENT_SECRET")
+OAUTH2_REDIRECT_URI = get_env("OAUTH2_REDIRECT_URI")
 
-API_BASE_URL = os.environ.get('API_BASE_URL').strip()
+API_BASE_URL = os.environ.get('API_BASE_URL')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
+
+
+def get_env(env):
+    return env.strip()
 
 
 def token_updater(token):
@@ -67,11 +71,11 @@ def login_required(f):
 def dj_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/get/user/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/get/user/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id']}).json()
         try:
-            if int(os.getenv("BOT_COMMANDER_ROLE_ID")) in r['roles']:
+            if int(get_env("BOT_COMMANDER_ROLE_ID")) in r['roles']:
                 return f(*args, **kwargs)
             else:
                 flash("You need to be a DJ to perform this action")
@@ -136,8 +140,8 @@ def logout():
 @dj_required
 def bot_toggle_play():
     try:
-        bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
-        j = {"authkey": os.getenv("WEB_AUTH_KEY"),
+        bot_status = requests.get(f"{get_env('DISCORD_BOT_REST_API')}/player_status/").json()
+        j = {"authkey": get_env("WEB_AUTH_KEY"),
              "user_id": session['discord_id'],
              "cmd": "pause",
              "args": ""}
@@ -145,7 +149,7 @@ def bot_toggle_play():
         if bot_status['is_pause']:
             j['cmd'] = "resume"
 
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
                           json=j).json()
 
         if 'error' in r:
@@ -162,8 +166,8 @@ def bot_toggle_play():
 @dj_required
 def bot_skip():
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "skip",
                                 "args": ""}).json()
@@ -181,8 +185,8 @@ def bot_skip():
 @dj_required
 def bot_volume_high():
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
                                 "args": "100"}).json()
@@ -200,8 +204,8 @@ def bot_volume_high():
 @dj_required
 def bot_volume_low():
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
                                 "args": "5"}).json()
@@ -219,12 +223,12 @@ def bot_volume_low():
 @dj_required
 def bot_toggle_autoplay():
     try:
-        bot_status = requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json()
+        bot_status = requests.get(f"{get_env('DISCORD_BOT_REST_API')}/player_status/").json()
         arg = "on"
         if bot_status['auto_play']:
             arg = "off"
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "autoplay",
                                 "args": arg}).json()
@@ -242,8 +246,8 @@ def bot_toggle_autoplay():
 @dj_required
 def bot_set_volume():
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
                                 "args": str(request.form['volume_level'])}).json()
@@ -262,8 +266,8 @@ def bot_set_volume():
 @dj_required
 def bot_play_song():
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "play",
                                 "args": request.form['yt_song_url']}).json()
@@ -284,8 +288,8 @@ def bot_play_song():
 @dj_required
 def bot_move_song_up(song_id):
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
                                 "args": f"{song_id} {int(song_id) - 1}"}).json()
@@ -304,8 +308,8 @@ def bot_move_song_up(song_id):
 @dj_required
 def bot_move_song_top(song_id):
     try:
-        r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                          json={"authkey": os.getenv("WEB_AUTH_KEY"),
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
                                 "args": f"{song_id}"}).json()
@@ -323,8 +327,8 @@ def bot_move_song_top(song_id):
 @login_required
 @dj_required
 def bot_clear_queue():
-    r = requests.post(f'{os.getenv("DISCORD_BOT_REST_API")}/API/bot/request/',
-                      json={"authkey": os.getenv("WEB_AUTH_KEY"),
+    r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": get_env("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "clearQueue",
                             "args": ""}).json()
@@ -336,7 +340,7 @@ def bot_clear_queue():
 @app.route('/player_status/', methods=["GET"])
 def get_player_status():
     try:
-        return jsonify(requests.get(f"{os.getenv('DISCORD_BOT_REST_API')}/player_status/").json())
+        return jsonify(requests.get(f"{get_env('DISCORD_BOT_REST_API')}/player_status/").json())
 
     except Exception as e:
         app.logger.error("Bot API didn't returned error")
