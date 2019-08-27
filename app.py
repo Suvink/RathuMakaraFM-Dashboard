@@ -21,19 +21,16 @@ dictConfig({
     }
 })
 
-OAUTH2_CLIENT_ID = os.getenv("OAUTH2_CLIENT_ID")
-OAUTH2_CLIENT_SECRET = os.getenv("OAUTH2_CLIENT_SECRET")
-OAUTH2_REDIRECT_URI = os.getenv("OAUTH2_REDIRECT_URI")
+OAUTH2_CLIENT_ID = os.getenv("OAUTH2_CLIENT_ID").strip()
+OAUTH2_CLIENT_SECRET = os.getenv("OAUTH2_CLIENT_SECRET").strip()
+OAUTH2_REDIRECT_URI = os.getenv("OAUTH2_REDIRECT_URI").strip()
 
-API_BASE_URL = os.environ.get('API_BASE_URL')
+API_BASE_URL = os.environ.get('API_BASE_URL').strip()
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
-
-# if 'http://' in OAUTH2_REDIRECT_URI:
-#     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
 
 def token_updater(token):
