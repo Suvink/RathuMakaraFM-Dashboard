@@ -23,7 +23,7 @@ dictConfig({
 
 
 def get_env(env):
-    return env.strip()
+    return os.getenv(env).strip()
 
 
 OAUTH2_CLIENT_ID = get_env("OAUTH2_CLIENT_ID")
