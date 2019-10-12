@@ -1,23 +1,41 @@
-import json
 import os
 from flask import Flask, session, redirect, request, url_for, jsonify, render_template, flash
 from requests_oauthlib import OAuth2Session
 from functools import wraps
 import requests
+from logging.config import dictConfig
 
-OAUTH2_CLIENT_ID = "498036184501714944"
-OAUTH2_CLIENT_SECRET = "q8nOQLkd-jdKJUVC2jonYLitYsDOADiL"
-OAUTH2_REDIRECT_URI = 'https://rathumakara.iconicto.com/callback/'
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['wsgi']
+    }
+})
 
-API_BASE_URL = os.environ.get('API_BASE_URL', 'https://discordapp.com/api')
+
+def get_env(env):
+    return os.getenv(env).strip()
+
+
+OAUTH2_CLIENT_ID = get_env("OAUTH2_CLIENT_ID")
+OAUTH2_CLIENT_SECRET = get_env("OAUTH2_CLIENT_SECRET")
+OAUTH2_REDIRECT_URI = get_env("OAUTH2_REDIRECT_URI")
+
+API_BASE_URL = os.environ.get('API_BASE_URL')
 AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize'
 TOKEN_URL = API_BASE_URL + '/oauth2/token'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = OAUTH2_CLIENT_SECRET
-
-if 'http://' in OAUTH2_REDIRECT_URI:
-    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
 
 def token_updater(token):
@@ -54,11 +72,11 @@ def login_required(f):
 def dj_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        r = requests.post('http://127.0.0.1:5000/API/bot/get/user/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/get/user/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id']}).json()
         try:
-            if 485449088360382465 in r['roles']:
+            if int(get_env("BOT_COMMANDER_ROLE_ID")) in r['roles']:
                 return f(*args, **kwargs)
             else:
                 flash("You need to be a DJ to perform this action")
@@ -96,6 +114,7 @@ def callback():
     if request.values.get('error'):
         return request.values['error']
     discord = make_session(state=session.get('oauth2_state'))
+    app.logger.debug(f"authorization_response : {request.url}")
     token = discord.fetch_token(
         TOKEN_URL,
         client_secret=OAUTH2_CLIENT_SECRET,
@@ -121,81 +140,106 @@ def logout():
 @login_required
 @dj_required
 def bot_toggle_play():
-    bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
-    j = {"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
-         "user_id": session['discord_id'],
-         "cmd": "pause",
-         "args": ""}
+    try:
+        bot_status = requests.get(f"{get_env('DISCORD_BOT_REST_API')}/player_status/").json()
+        j = {"authkey": get_env("WEB_AUTH_KEY"),
+             "user_id": session['discord_id'],
+             "cmd": "pause",
+             "args": ""}
 
-    if bot_status['is_pause']:
-        j['cmd'] = "resume"
+        if bot_status['is_pause']:
+            j['cmd'] = "resume"
 
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json=j).json()
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json=j).json()
 
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/skip/')
 @login_required
 @dj_required
 def bot_skip():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
-                            "user_id": session['discord_id'],
-                            "cmd": "skip",
-                            "args": ""}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "skip",
+                                "args": ""}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/volume/high/')
 @login_required
 @dj_required
 def bot_volume_high():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
-                            "user_id": session['discord_id'],
-                            "cmd": "volume",
-                            "args": "100"}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "volume",
+                                "args": "100"}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/volume/low/')
 @login_required
 @dj_required
 def bot_volume_low():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
-                            "user_id": session['discord_id'],
-                            "cmd": "volume",
-                            "args": "5"}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "volume",
+                                "args": "5"}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/toggle/autoplay')
 @login_required
 @dj_required
 def bot_toggle_autoplay():
-    bot_status = requests.get("https://rathumakara.iconicto.com/player_status/").json()
-    arg = "on"
-    if bot_status['auto_play']:
-        arg = "off"
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
-                            "user_id": session['discord_id'],
-                            "cmd": "autoplay",
-                            "args": arg}).json()
-    if 'error' in r:
-        flash(r['error'])
-    return redirect(url_for('index'))
+    try:
+        bot_status = requests.get(f"{get_env('DISCORD_BOT_REST_API')}/player_status/").json()
+        arg = "on"
+        if bot_status['auto_play']:
+            arg = "off"
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
+                                "user_id": session['discord_id'],
+                                "cmd": "autoplay",
+                                "args": arg}).json()
+        if 'error' in r:
+            flash(r['error'])
+        return redirect(url_for('index'))
+    except Exception as e:
+        app.logger.exception(e)
+        flash("Something Went Wrong")
+        return redirect(url_for('index'))
 
 
 @app.route('/bot/volume/set/', methods=["POST"])
@@ -203,8 +247,8 @@ def bot_toggle_autoplay():
 @dj_required
 def bot_set_volume():
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "volume",
                                 "args": str(request.form['volume_level'])}).json()
@@ -223,8 +267,8 @@ def bot_set_volume():
 @dj_required
 def bot_play_song():
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "play",
                                 "args": request.form['yt_song_url']}).json()
@@ -245,11 +289,11 @@ def bot_play_song():
 @dj_required
 def bot_move_song_up(song_id):
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
-                                "args": f"{song_id} {int(song_id)-1}"}).json()
+                                "args": f"{song_id} {int(song_id) - 1}"}).json()
         if 'error' in r:
             flash(r['error'])
         return redirect(url_for('index'))
@@ -265,8 +309,8 @@ def bot_move_song_up(song_id):
 @dj_required
 def bot_move_song_top(song_id):
     try:
-        r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                          json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+        r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                          json={"authkey": get_env("WEB_AUTH_KEY"),
                                 "user_id": session['discord_id'],
                                 "cmd": "move",
                                 "args": f"{song_id}"}).json()
@@ -284,8 +328,8 @@ def bot_move_song_top(song_id):
 @login_required
 @dj_required
 def bot_clear_queue():
-    r = requests.post('http://127.0.0.1:5000/API/bot/request/',
-                      json={"authkey": "!cW#850oOY1QZd%cs9MPG03!ADP@K8g6Yrfik#nBIF2RKg&jvI",
+    r = requests.post(f'{get_env("DISCORD_BOT_REST_API")}/API/bot/request/',
+                      json={"authkey": get_env("WEB_AUTH_KEY"),
                             "user_id": session['discord_id'],
                             "cmd": "clearQueue",
                             "args": ""}).json()
@@ -297,15 +341,10 @@ def bot_clear_queue():
 @app.route('/player_status/', methods=["GET"])
 def get_player_status():
     try:
-        while True:
-            if os.stat("/root/RathuMakaraFM-DiscordBot/status.json").st_size != 0:
-                break
-
-        with open('/root/RathuMakaraFM-DiscordBot/status.json', "r") as f:
-            return jsonify(json.load(f))
+        return jsonify(requests.get(f"{get_env('DISCORD_BOT_REST_API')}/player_status/").json())
 
     except Exception as e:
-        app.logger.error("Reading status.json")
+        app.logger.error("Bot API didn't returned error")
         app.logger.exception(e)
         return jsonify(
             {
@@ -321,4 +360,5 @@ def get_player_status():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.logger.debug("Starting Rathumakara Dashboard")
+    app.run(host="0.0.0.0")
